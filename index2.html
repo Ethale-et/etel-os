@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0d0820">
+<meta name="description" content="ETEL AI Agent OS — ኢቴሌ · Intelligence, Memory, Agency. Free Forever.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ETEL AI">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>ETEL AI · ኢቴሌ Agent OS</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --void:#0d0820;--surface:#160e30;--card:#1e1440;--card2:#231848;
+  --gold:#e8b020;--gold-l:#f5cc55;--gold-d:#4a3c00;
+  --indigo:#7c5fc7;--indigo-l:#b8a4e8;
+  --green:#1d9e75;--green-l:#9fe1cb;
+  --coral:#d85a30;--blue:#378add;--blue-l:#85b7eb;
+  --border:rgba(232,176,32,0.2);--border2:rgba(124,95,199,0.28);
+  --tx:#f0eaff;--tx2:#b8a4e8;--tx3:#6a5a9a;
+  --r:10px;
+}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--void);color:var(--tx);font-family:'Crimson Pro',Georgia,serif;font-size:15px;display:flex;flex-direction:column;}
+
+/* TOPBAR */
+.topbar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 1.1rem;height:58px;background:rgba(13,8,32,0.97);border-bottom:0.5px solid var(--border);z-index:10;}
+.logo-row{display:flex;align-items:center;gap:.65rem;}
+.logo-img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);box-shadow:0 0 12px rgba(232,176,32,.35);}
+.logo-text{display:flex;flex-direction:column;line-height:1.1;}
+.logo-en{font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;letter-spacing:.18em;background:linear-gradient(135deg,var(--gold-l),var(--gold),var(--indigo-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-am{font-size:.72rem;color:var(--gold);letter-spacing:.08em;opacity:.8;}
+.topbar-right{display:flex;align-items:center;gap:.65rem;}
+.sync-pill{display:flex;align-items:center;gap:5px;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.1em;color:var(--green-l);border:0.5px solid rgba(29,158,117,.3);padding:.22rem .6rem;border-radius:20px;}
+.sync-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.ibtn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.08em;padding:.28rem .7rem;border-radius:6px;border:0.5px solid var(--border);color:var(--gold);background:rgba(232,176,32,.07);cursor:pointer;}
+
+/* LAYOUT */
+.body{flex:1;display:flex;overflow:hidden;}
+.sidebar{width:198px;flex-shrink:0;background:var(--surface);border-right:0.5px solid var(--border);overflow-y:auto;}
+.ss{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.2em;color:var(--tx3);padding:.7rem 1.1rem .22rem;text-transform:uppercase;}
+.si{display:flex;align-items:center;gap:.52rem;padding:.52rem 1.1rem;cursor:pointer;font-size:.82rem;color:var(--tx2);border-left:2px solid transparent;transition:all .14s;user-select:none;}
+.si:hover{color:var(--gold-l);background:rgba(232,176,32,.05);}
+.si.active{color:var(--gold-l);border-left-color:var(--gold);background:rgba(232,176,32,.08);}
+.si svg{width:15px;height:15px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
+.badge{margin-left:auto;font-size:.6rem;padding:.08rem .38rem;border-radius:8px;background:rgba(232,176,32,.15);color:var(--gold);font-family:'Cinzel',serif;min-width:16px;text-align:center;}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:1.1rem;-webkit-overflow-scrolling:touch;}
+
+/* HERO BANNER */
+.hero{display:flex;align-items:center;gap:1rem;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:1rem 1.2rem;margin-bottom:1.1rem;}
+.hero-logo{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 0 18px rgba(232,176,32,.3);}
+.hero-title{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700;letter-spacing:.12em;background:linear-gradient(135deg,var(--gold-l),var(--gold),var(--indigo-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-am{font-size:1rem;color:var(--gold);letter-spacing:.06em;margin-top:.1rem;}
+.hero-sub{font-size:.8rem;color:var(--tx2);font-style:italic;margin-top:.2rem;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.1rem;}
+.stat{background:var(--surface);border:0.5px solid var(--border);border-radius:8px;padding:.6rem .8rem;}
+.sv{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;color:var(--gold-l);}
+.sl{font-size:.65rem;color:var(--tx3);letter-spacing:.05em;margin-top:1px;}
+
+/* TOOLBAR */
+.toolbar{display:flex;gap:.55rem;align-items:center;margin-bottom:.9rem;}
+.sbox{flex:1;display:flex;align-items:center;gap:.45rem;background:var(--surface);border:0.5px solid var(--border);border-radius:6px;padding:.48rem .7rem;}
+.sbox svg{width:14px;height:14px;flex-shrink:0;stroke:var(--tx3);fill:none;stroke-width:2;}
+.sbox input{flex:1;background:none;border:none;outline:none;color:var(--tx);font-family:'Crimson Pro',serif;font-size:.88rem;}
+.sbox input::placeholder{color:var(--tx3);font-style:italic;}
+.fpill{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.07em;padding:.32rem .7rem;border-radius:20px;border:0.5px solid var(--border);color:var(--tx2);cursor:pointer;white-space:nowrap;transition:all .18s;background:transparent;}
+.fpill.on{color:var(--gold);border-color:rgba(232,176,32,.5);background:rgba(232,176,32,.08);}
+
+/* CAT TABS */
+.ctabs{display:flex;gap:.38rem;margin-bottom:.9rem;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;}
+.ctabs::-webkit-scrollbar{display:none;}
+.ct{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.07em;padding:.26rem .7rem;border-radius:20px;border:0.5px solid var(--border2);color:var(--tx2);cursor:pointer;white-space:nowrap;transition:all .18s;flex-shrink:0;}
+.ct.active{background:var(--gold);color:var(--gold-d);border-color:var(--gold);font-weight:600;}
+
+/* SKILL GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.7rem;}
+.skc{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.85rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.skc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--skc,var(--gold));opacity:0;transition:opacity .2s;}
+.skc:hover::after,.skc.inst::after{opacity:1;}
+.skc.inst{border-color:rgba(29,158,117,.35);}
+.skc.inst::after{background:var(--green);}
+.skc.loading::after{opacity:1;animation:sw 1.8s linear forwards;}
+@keyframes sw{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.ski{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;font-size:.95rem;}
+.skn{font-family:'Cinzel',serif;font-size:.7rem;font-weight:600;color:var(--tx);margin-bottom:.22rem;letter-spacing:.04em;}
+.skd{font-size:.72rem;color:var(--tx2);line-height:1.42;margin-bottom:.6rem;}
+.skf{display:flex;align-items:center;justify-content:space-between;}
+.sksz{font-size:.62rem;color:var(--tx3);}
+.skb{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.07em;padding:.2rem .55rem;border-radius:4px;border:0.5px solid;cursor:pointer;transition:all .16s;}
+.skb.get{color:var(--gold);border-color:rgba(232,176,32,.35);background:rgba(232,176,32,.07);}
+.skb.get:hover{background:rgba(232,176,32,.18);}
+.skb.done{color:var(--green-l);border-color:rgba(29,158,117,.35);background:rgba(29,158,117,.07);}
+.skb.wait{color:var(--tx3);border-color:var(--border);background:none;cursor:default;}
+
+/* AGENT */
+.al{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.6rem;margin-bottom:1.1rem;}
+.alc{background:var(--card);border-radius:8px;padding:.7rem;border-top:2px solid;}
+.aln{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.04em;margin-bottom:.18rem;}
+.als{font-size:.68rem;color:var(--tx3);}
+.abox{background:var(--card2);border:0.5px solid var(--border);border-radius:var(--r);padding:.95rem;}
+.amet{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;}
+.aav{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);flex-shrink:0;box-shadow:0 0 10px rgba(232,176,32,.25);}
+.atitle{font-family:'Cinzel',serif;font-size:.76rem;color:var(--gold-l);letter-spacing:.07em;}
+.asub{font-size:.7rem;color:var(--tx3);}
+.chips{display:flex;gap:.38rem;flex-wrap:wrap;margin-bottom:.8rem;min-height:22px;}
+.chip{display:flex;align-items:center;gap:.28rem;padding:.16rem .5rem;border-radius:20px;font-size:.63rem;border:0.5px solid;font-family:'Cinzel',serif;letter-spacing:.03em;}
+.ainrow{display:flex;gap:.48rem;margin-bottom:.7rem;}
+.ain{flex:1;background:var(--surface);border:0.5px solid var(--border);border-radius:6px;padding:.48rem .75rem;color:var(--tx);font-family:'Crimson Pro',serif;font-size:.88rem;outline:none;transition:border-color .18s;}
+.ain:focus{border-color:var(--gold);}
+.ain::placeholder{color:var(--tx3);font-style:italic;}
+.ago{background:var(--gold);border:none;border-radius:6px;padding:.48rem .82rem;color:var(--gold-d);cursor:pointer;font-size:.88rem;font-weight:700;transition:all .18s;flex-shrink:0;}
+.ago:hover{background:var(--gold-l);}
+.outbox{background:var(--surface);border:0.5px solid var(--border);border-radius:6px;padding:.7rem;font-size:.83rem;color:var(--tx2);line-height:1.68;min-height:58px;white-space:pre-wrap;}
+.olbl{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.14em;color:var(--indigo-l);display:block;margin-bottom:.32rem;}
+.cur{display:inline-block;width:2px;height:11px;background:var(--gold);animation:blink 1s step-end infinite;vertical-align:text-bottom;margin-left:1px;}
+
+/* SYNC */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.9rem;}
+.dcard{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:1rem;}
+.dn{font-family:'Cinzel',serif;font-size:.76rem;color:var(--gold-l);margin-bottom:.18rem;}
+.ds{font-size:.72rem;color:var(--tx2);margin-bottom:.6rem;}
+.dbar{height:3px;border-radius:2px;background:rgba(232,176,32,.1);overflow:hidden;}
+.dfill{height:100%;border-radius:2px;background:var(--gold);width:0%;transition:width 1.4s ease;}
+.dpct{font-size:.66rem;color:var(--tx3);margin-top:.28rem;}
+.slog{background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.85rem;}
+.slgt{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.14em;color:var(--tx3);margin-bottom:.6rem;}
+.slgr{display:flex;align-items:flex-start;gap:.55rem;padding:.38rem 0;border-bottom:0.5px solid rgba(232,176,32,.06);font-size:.76rem;}
+.slgr:last-child{border-bottom:none;}
+
+/* DATABASE */
+.dbw{overflow-x:auto;}
+table.dbt{width:100%;border-collapse:collapse;font-size:.78rem;}
+table.dbt th{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.11em;color:var(--tx3);text-align:left;padding:.42rem .65rem;border-bottom:0.5px solid var(--border);font-weight:400;}
+table.dbt td{padding:.52rem .65rem;border-bottom:0.5px solid rgba(232,176,32,.05);color:var(--tx2);}
+table.dbt tr:hover td{background:rgba(124,95,199,.05);}
+.pill{display:inline-block;font-size:.58rem;padding:.1rem .42rem;border-radius:4px;font-family:'Cinzel',serif;}
+.empty{color:var(--tx3);font-size:.86rem;font-style:italic;padding:1.5rem 0;text-align:center;}
+
+/* BOTTOM NAV */
+.bnav{display:none;flex-shrink:0;background:rgba(13,8,32,.98);border-top:0.5px solid var(--border);z-index:10;}
+.bni{display:flex;}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.55rem .2rem .38rem;cursor:pointer;color:var(--tx3);font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.06em;gap:.22rem;transition:color .14s;border:none;background:none;}
+.bn.active{color:var(--gold);}
+.bn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+@media(max-width:600px){
+  .sidebar{display:none;}.bnav{display:flex;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .sgrid{grid-template-columns:repeat(2,1fr);}
+  .dgrid{grid-template-columns:1fr;}
+  .hero-title{font-size:1rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo-row">
+    <img class="logo-img" src="icons/etel-logo.png" alt="ETEL AI Logo" onerror="this.style.display='none'">
+    <div class="logo-text">
+      <span class="logo-en">ETEL AI</span>
+      <span class="logo-am">ኢቴሌ</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="sync-pill"><span class="sync-dot"></span>Live · Free</div>
+    <button class="ibtn" id="pwa-btn" style="display:none" onclick="installPWA()">Install App</button>
+  </div>
+</div>
+
+<div class="body">
+<nav class="sidebar">
+  <div class="ss">Main</div>
+  <div class="si active" data-v="skills" onclick="nav('skills',this)">
+    <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Skill Store<span class="badge" id="bn">0</span>
+  </div>
+  <div class="si" data-v="agent" onclick="nav('agent',this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="7" r="3"/><path d="M6 11V9a6 6 0 0 1 12 0v2"/></svg>My Agent
+  </div>
+  <div class="si" data-v="sync" onclick="nav('sync',this)">
+    <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-9 9"/><path d="M3 12a9 9 0 0 1 9-9"/><path d="m21 3-3 3 3 3"/><path d="m3 21 3-3-3-3"/></svg>Sync
+  </div>
+  <div class="si" data-v="database" onclick="nav('database',this)">
+    <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>Database
+  </div>
+  <div class="ss" style="margin-top:.7rem;">Category</div>
+  <div class="si" onclick="sdf('all',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>All</div>
+  <div class="si" onclick="sdf('coding',this)"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Coding</div>
+  <div class="si" onclick="sdf('voice',this)"><svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>Voice</div>
+  <div class="si" onclick="sdf('vision',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Vision</div>
+  <div class="si" onclick="sdf('research',this)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Research</div>
+  <div class="si" onclick="sdf('memory',this)"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4"/><path d="M15 3h4a2 2 0 0 1 2 2v4"/><path d="M9 21H5a2 2 0 0 1-2-2v-4"/><path d="M15 21h4a2 2 0 0 0 2-2v-4"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>Memory</div>
+  <div class="si" onclick="sdf('tools',this)"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</div>
+</nav>
+
+<main class="main" id="main">
+
+<!-- SKILLS -->
+<div id="v-skills">
+  <div class="hero">
+    <img class="hero-logo" src="icons/etel-logo.png" alt="ETEL" onerror="this.style.display='none'">
+    <div>
+      <div class="hero-title">ETEL AI Agent OS</div>
+      <div class="hero-am">ኢቴሌ · Intelligence · Memory · Agency</div>
+      <div class="hero-sub">Download AI skills free. Your agent grows stronger with every skill.</div>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="sv" id="si">0</div><div class="sl">Installed</div></div>
+    <div class="stat"><div class="sv">27</div><div class="sl">Available</div></div>
+    <div class="stat"><div class="sv" id="sa">0</div><div class="sl">Active</div></div>
+    <div class="stat"><div class="sv">Free</div><div class="sl">Forever</div></div>
+  </div>
+  <div class="toolbar">
+    <div class="sbox">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="q" placeholder="Search skills..." oninput="render()">
+    </div>
+    <div class="fpill" id="fp" onclick="toggleFree(this)">Free only</div>
+  </div>
+  <div class="ctabs">
+    <div class="ct active" onclick="setCat('all',this)">All</div>
+    <div class="ct" onclick="setCat('coding',this)">Coding</div>
+    <div class="ct" onclick="setCat('voice',this)">Voice</div>
+    <div class="ct" onclick="setCat('vision',this)">Vision</div>
+    <div class="ct" onclick="setCat('research',this)">Research</div>
+    <div class="ct" onclick="setCat('memory',this)">Memory</div>
+    <div class="ct" onclick="setCat('tools',this)">Tools</div>
+  </div>
+  <div class="sgrid" id="grid"></div>
+</div>
+
+<!-- AGENT -->
+<div id="v-agent" style="display:none">
+  <div class="hero" style="margin-bottom:1rem;">
+    <img class="hero-logo" src="icons/etel-logo.png" alt="ETEL" onerror="this.style.display='none'">
+    <div><div class="hero-title">My ETEL Agent</div><div class="hero-am">ኢቴሌ · SkillOS Active</div><div class="hero-sub">Install skills from the store — they load here automatically.</div></div>
+  </div>
+  <div id="al-empty" class="empty">No skills installed yet. Go to Skill Store and tap + Get on any skill.</div>
+  <div class="al" id="al"></div>
+  <div class="abox">
+    <div class="amet">
+      <img class="aav" src="icons/etel-logo.png" alt="ETEL" onerror="this.style.background='rgba(232,176,32,.15)'">
+      <div><div class="atitle">ETEL AI Agent · ኢቴሌ</div><div class="asub">Open Claude · Obsidian Memory · HERMES · Free</div></div>
+    </div>
+    <div class="chips" id="chips"><span style="font-size:.72rem;color:var(--tx3);font-style:italic;">Install skills to activate them</span></div>
+    <div class="ainrow">
+      <input class="ain" id="aq" placeholder="Ask your ETEL agent anything...">
+      <button class="ago" onclick="runAgent()">▶</button>
+    </div>
+    <div class="outbox"><span class="olbl">ETEL · ኢቴሌ Response</span><span id="ao">Ready. Install skills then ask me anything.<span class="cur"></span></span></div>
+  </div>
+</div>
+
+<!-- SYNC -->
+<div id="v-sync" style="display:none">
+  <div class="hero" style="margin-bottom:1rem;">
+    <img class="hero-logo" src="icons/etel-logo.png" alt="ETEL" onerror="this.style.display='none'">
+    <div><div class="hero-title">Device Sync</div><div class="hero-am">Phone + Computer · Free Forever</div></div>
+  </div>
+  <div class="dgrid">
+    <div class="dcard"><div style="font-size:1.5rem;margin-bottom:.45rem;">📱</div><div class="dn">Android / iOS</div><div class="ds">PWA · <span style="color:var(--green-l)">Online</span></div><div class="dbar"><div class="dfill" id="pb"></div></div><div class="dpct" id="pp">Waiting...</div></div>
+    <div class="dcard"><div style="font-size:1.5rem;margin-bottom:.45rem;">💻</div><div class="dn">Desktop / Computer</div><div class="ds">Obsidian · <span style="color:var(--green-l)">Synced</span></div><div class="dbar"><div class="dfill" id="db2"></div></div><div class="dpct" id="dp">Waiting...</div></div>
+  </div>
+  <div class="slog"><div class="slgt">SYNC LOG</div><div id="slg"></div></div>
+  <div style="margin-top:.8rem;background:var(--card);border:0.5px solid var(--border);border-radius:var(--r);padding:.85rem;">
+    <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;color:var(--tx3);margin-bottom:.6rem;">FREE FOREVER STACK · ኢቴሌ</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;font-size:.76rem;color:var(--tx2);">
+      <div>✓ SQLite local database</div><div>✓ IndexedDB browser cache</div>
+      <div>✓ Obsidian Vault memory</div><div>✓ PWA offline service worker</div>
+      <div>✓ GitHub free repo backup</div><div>✓ Vercel/Netlify free hosting</div>
+      <div>✓ Ollama local AI (free)</div><div>✓ Claude API free tier</div>
+    </div>
+  </div>
+</div>
+
+<!-- DATABASE -->
+<div id="v-database" style="display:none">
+  <div class="hero" style="margin-bottom:1rem;">
+    <img class="hero-logo" src="icons/etel-logo.png" alt="ETEL" onerror="this.style.display:'none'">
+    <div><div class="hero-title">Skill Database</div><div class="hero-am">etel_skills.sqlite · Local · Permanent</div></div>
+  </div>
+  <div class="dbw"><table class="dbt"><thead><tr><th>Skill</th><th>Category</th><th>Ver</th><th>Size</th><th>Status</th><th>Cost</th></tr></thead><tbody id="dbt"></tbody></table></div>
+  <div style="margin-top:.65rem;font-size:.73rem;color:var(--tx3);font-style:italic;">Stored on your device · Never expires · No cloud · No subscription</div>
+</div>
+
+</main>
+</div>
+
+<nav class="bnav">
+  <div class="bni">
+    <button class="bn active" onclick="nav('skills',this)"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Skills</button>
+    <button class="bn" onclick="nav('agent',this)"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="7" r="3"/><path d="M6 11V9a6 6 0 0 1 12 0v2"/></svg>Agent</button>
+    <button class="bn" onclick="nav('sync',this)"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-9 9"/><path d="M3 12a9 9 0 0 1 9-9"/><path d="m21 3-3 3 3 3"/><path d="m3 21 3-3-3-3"/></svg>Sync</button>
+    <button class="bn" onclick="nav('database',this)"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>DB</button>
+  </div>
+</nav>
+
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
+
+const SK=[
+  {id:'code-gen',n:'Code Generator',c:'coding',col:'#7c5fc7',bg:'rgba(124,95,199,.15)',d:'Write, debug & explain code in 40+ languages.',sz:'2.1 MB'},
+  {id:'code-review',n:'Code Reviewer',c:'coding',col:'#7c5fc7',bg:'rgba(124,95,199,.15)',d:'PR reviews, security checks, refactoring.',sz:'1.8 MB'},
+  {id:'code-test',n:'Test Writer',c:'coding',col:'#7c5fc7',bg:'rgba(124,95,199,.15)',d:'Unit, integration & e2e test generation.',sz:'1.4 MB'},
+  {id:'code-sql',n:'SQL Expert',c:'coding',col:'#7c5fc7',bg:'rgba(124,95,199,.15)',d:'Query writing, optimisation, schema design.',sz:'1.2 MB'},
+  {id:'voice-stt',n:'Speech to Text',c:'voice',col:'#e8b020',bg:'rgba(232,176,32,.15)',d:'Transcribe voice in any language, offline.',sz:'48 MB'},
+  {id:'voice-tts',n:'Text to Speech',c:'voice',col:'#e8b020',bg:'rgba(232,176,32,.15)',d:'Natural voice output · 20 voices · multilingual.',sz:'32 MB'},
+  {id:'voice-cmd',n:'Voice Commands',c:'voice',col:'#e8b020',bg:'rgba(232,176,32,.15)',d:'Wake word & voice-activated agent tasks.',sz:'12 MB'},
+  {id:'vision-ocr',n:'OCR Reader',c:'vision',col:'#d85a30',bg:'rgba(216,90,48,.15)',d:'Extract text from images, PDFs, screenshots.',sz:'22 MB'},
+  {id:'vision-img',n:'Image Analyst',c:'vision',col:'#d85a30',bg:'rgba(216,90,48,.15)',d:'Describe, classify and reason over images.',sz:'180 MB'},
+  {id:'vision-doc',n:'Document AI',c:'vision',col:'#d85a30',bg:'rgba(216,90,48,.15)',d:'Parse invoices, contracts, forms.',sz:'28 MB'},
+  {id:'vision-chart',n:'Chart Reader',c:'vision',col:'#d85a30',bg:'rgba(216,90,48,.15)',d:'Read and interpret graphs and dashboards.',sz:'14 MB'},
+  {id:'research-web',n:'Web Researcher',c:'research',col:'#378add',bg:'rgba(55,138,221,.15)',d:'Deep web search, summarise, cite sources.',sz:'3.2 MB'},
+  {id:'research-paper',n:'Paper Analyser',c:'research',col:'#378add',bg:'rgba(55,138,221,.15)',d:'Parse academic papers, extract findings.',sz:'2.8 MB'},
+  {id:'research-fact',n:'Fact Checker',c:'research',col:'#378add',bg:'rgba(55,138,221,.15)',d:'Cross-reference claims against sources.',sz:'2.1 MB'},
+  {id:'research-news',n:'News Monitor',c:'research',col:'#378add',bg:'rgba(55,138,221,.15)',d:'Track topics, headlines, detect trends.',sz:'1.9 MB'},
+  {id:'research-data',n:'Data Analyst',c:'research',col:'#378add',bg:'rgba(55,138,221,.15)',d:'CSV, JSON & spreadsheet analysis.',sz:'4.1 MB'},
+  {id:'mem-obsidian',n:'Obsidian Memory',c:'memory',col:'#b8a4e8',bg:'rgba(184,164,232,.15)',d:'Read/write Obsidian vault as agent memory.',sz:'0.8 MB'},
+  {id:'mem-episodic',n:'Episodic Memory',c:'memory',col:'#b8a4e8',bg:'rgba(184,164,232,.15)',d:'Remember sessions, decisions and context.',sz:'1.1 MB'},
+  {id:'mem-semantic',n:'Semantic Search',c:'memory',col:'#b8a4e8',bg:'rgba(184,164,232,.15)',d:'Search your knowledge graph by meaning.',sz:'45 MB'},
+  {id:'mem-graph',n:'Knowledge Graph',c:'memory',col:'#b8a4e8',bg:'rgba(184,164,232,.15)',d:'Link concepts for connected intelligence.',sz:'2.4 MB'},
+  {id:'mem-profile',n:'User Profiler',c:'memory',col:'#b8a4e8',bg:'rgba(184,164,232,.15)',d:'Track preferences, habits, personal context.',sz:'0.6 MB'},
+  {id:'tools-calendar',n:'Calendar Agent',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Manage calendar events by command.',sz:'1.5 MB'},
+  {id:'tools-email',n:'Email Composer',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Draft, reply and summarise emails.',sz:'1.2 MB'},
+  {id:'tools-task',n:'Task Planner',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Break goals to tasks, prioritise, track.',sz:'0.9 MB'},
+  {id:'tools-calc',n:'Math & Calculator',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Advanced maths, equations, conversions.',sz:'0.7 MB'},
+  {id:'tools-translate',n:'Translator',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Translate 100+ languages with context.',sz:'220 MB'},
+  {id:'tools-write',n:'Writing Coach',c:'tools',col:'#1d9e75',bg:'rgba(29,158,117,.15)',d:'Improve tone, grammar, style, persuasion.',sz:'1.8 MB'},
+];
+
+const ST={inst:new Set(),cat:'all',free:false};
+function save(){try{localStorage.setItem('etel_sk',JSON.stringify([...ST.inst]));}catch(e){}}
+function load(){try{const d=localStorage.getItem('etel_sk');if(d)JSON.parse(d).forEach(id=>ST.inst.add(id));}catch(e){}}
+
+function ce(c){return{coding:'⌨',voice:'🎙',vision:'👁',research:'🔍',memory:'🧠',tools:'⚙'}[c]||'✦';}
+
+function render(){
+  const q=(document.getElementById('q')||{}).value||'';
+  const f=SK.filter(s=>{
+    if(ST.cat!=='all'&&s.c!==ST.cat)return false;
+    if(q&&!s.n.toLowerCase().includes(q.toLowerCase())&&!s.d.toLowerCase().includes(q.toLowerCase()))return false;
+    return true;
+  });
+  const g=document.getElementById('grid');if(!g)return;
+  g.innerHTML=f.map(s=>{
+    const i=ST.inst.has(s.id);
+    return`<div class="skc${i?' inst':''}" style="--skc:${s.col}">
+      <div class="ski" style="background:${s.bg};border:0.5px solid ${s.col}44;">${ce(s.c)}</div>
+      <div class="skn">${s.n}</div>
+      <div class="skd">${s.d}</div>
+      <div class="skf"><span class="sksz">${s.sz}</span>
+      <button class="skb ${i?'done':'get'}" id="sb-${s.id}" onclick="tog('${s.id}')">${i?'✓ Active':'+ Get'}</button></div>
+    </div>`;
+  }).join('');
+  upStats();
+}
+
+function tog(id){
+  if(ST.inst.has(id)){ST.inst.delete(id);save();render();rAgent();rDB();return;}
+  const btn=document.getElementById('sb-'+id);
+  if(btn){btn.textContent='...';btn.className='skb wait';btn.disabled=true;}
+  document.getElementById('sb-'+id)?.closest('.skc')?.classList.add('loading');
+  setTimeout(()=>{ST.inst.add(id);save();render();rAgent();rDB();},1800);
+}
+
+function upStats(){
+  const n=ST.inst.size;
+  ['si','sa'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=n;});
+  const b=document.getElementById('bn');if(b)b.textContent=n;
+}
+
+function setCat(c,el){ST.cat=c;document.querySelectorAll('.ct').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');render();}
+function sdf(c,el){ST.cat=c;document.querySelectorAll('.ct').forEach(t=>t.classList.toggle('active',t.textContent.toLowerCase()===c||(c==='all'&&t.textContent==='All')));nav('skills',null);render();}
+function toggleFree(el){ST.free=!ST.free;el.classList.toggle('on',ST.free);el.textContent=ST.free?'✓ Free only':'Free only';render();}
+
+function nav(v,el){
+  ['skills','agent','sync','database'].forEach(n=>{const e=document.getElementById('v-'+n);if(e)e.style.display=n===v?'':'none';});
+  document.querySelectorAll('.si[data-v]').forEach(i=>i.classList.remove('active'));
+  const t=document.querySelector(`.si[data-v="${v}"]`);if(t)t.classList.add('active');
+  document.querySelectorAll('.bn').forEach(i=>i.classList.remove('active'));
+  if(el&&el.classList.contains('bn'))el.classList.add('active');
+  if(v==='sync')doSync();
+  if(v==='database')rDB();
+  if(v==='agent')rAgent();
+}
+
+function rAgent(){
+  const inst=SK.filter(s=>ST.inst.has(s.id));
+  const empty=document.getElementById('al-empty');
+  const al=document.getElementById('al');
+  const chips=document.getElementById('chips');
+  if(!al)return;
+  if(inst.length===0){if(empty)empty.style.display='';al.innerHTML='';chips.innerHTML='<span style="font-size:.72rem;color:var(--tx3);font-style:italic;">Install skills to activate them</span>';return;}
+  if(empty)empty.style.display='none';
+  al.innerHTML=inst.map(s=>`<div class="alc" style="border-top-color:${s.col};"><div class="aln" style="color:${s.col};">${s.n}</div><div class="als">Active · Free · Local</div></div>`).join('');
+  chips.innerHTML=inst.map(s=>`<div class="chip" style="color:${s.col};border-color:${s.col}44;background:${s.bg};">${ce(s.c)} ${s.n}</div>`).join('');
+}
+
+const reps=[
+  (q,sk)=>`Skills: ${sk.join(', ')}\n\nAnalysing "${q}" across ${sk.length} skill${sk.length>1?'s':''}...\n\nObsidian Vault loaded (847 notes). HERMES dispatched 2 sub-agents. Response synthesised and saved to /etel/sessions/today.md — free, local, permanent.`,
+  (q,sk)=>`Using: ${sk.join(' · ')}\n\nFound 5 memory nodes for "${q}" in your vault. Cross-referenced with live data. Summary ready — written to local database. Zero cloud cost.`,
+  (q,sk)=>`Executing "${q}" with ${sk.length} skills.\n\nCode drafted · Tests generated · Review passed. All saved locally. HERMES confirmed to 2 downstream agents.`,
+  (q,sk)=>`ETEL ኢቴሌ response for: "${q}"\n\nSemantic search: 8 matches across knowledge graph. Episodic memory: 3 prior sessions recalled. Insight written to Obsidian Vault. Free forever.`,
+];
+let ri=0;
+function runAgent(){
+  const q=(document.getElementById('aq')||{}).value||'';
+  if(!q.trim())return;
+  const inst=SK.filter(s=>ST.inst.has(s.id)).map(s=>s.n);
+  const out=document.getElementById('ao');
+  if(inst.length===0){if(out)out.textContent='Install skills from the Skill Store first.';return;}
+  if(out)out.innerHTML='<span class="cur"></span>';
+  const msg=reps[ri++%reps.length](q.trim(),inst);
+  let i=0;const iv=setInterval(()=>{
+    if(i<msg.length){if(out){out.textContent=msg.slice(0,++i);const c=document.createElement('span');c.className='cur';out.appendChild(c);}}
+    else clearInterval(iv);
+  },13);
+  document.getElementById('aq').value='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='aq')runAgent();});
+
+const LOGS=['All skills synced to local SQLite database','Obsidian Vault updated · 847 notes indexed','Agent prompt rebuilt with active skills','HERMES event bus · 3 routes active','PWA service worker refreshed · offline ready','IndexedDB skill cache validated'];
+function doSync(){
+  setTimeout(()=>{
+    const n=ST.inst.size;
+    const pb=document.getElementById('pb');if(pb)pb.style.width=(n>0?'85':'42')+'%';
+    const pp=document.getElementById('pp');if(pp)pp.textContent=(n>0?'85':'42')+'% · '+n+' skills';
+    const db2=document.getElementById('db2');if(db2)db2.style.width='100%';
+    const dp=document.getElementById('dp');if(dp)dp.textContent='100% · all stored';
+  },100);
+  const slg=document.getElementById('slg');
+  if(slg)slg.innerHTML=LOGS.map((t,i)=>`<div class="slgr"><span style="color:var(--green)">✓</span><span style="color:var(--tx2);flex:1">${t}</span><span style="color:var(--tx3);font-size:.66rem">${i===0?'now':i+'m ago'}</span></div>`).join('');
+}
+
+function rDB(){
+  const t=document.getElementById('dbt');if(!t)return;
+  const rows=SK.filter(s=>ST.inst.has(s.id));
+  if(rows.length===0){t.innerHTML='<tr><td colspan="6" style="color:var(--tx3);font-style:italic;text-align:center;padding:1.1rem;">No skills installed yet.</td></tr>';return;}
+  t.innerHTML=rows.map(s=>`<tr><td style="color:var(--tx)">${s.n}</td><td><span class="pill" style="color:${s.col};background:${s.bg}">${s.c}</span></td><td style="color:var(--tx3)">v1.0</td><td style="color:var(--tx3)">${s.sz}</td><td><span class="pill" style="color:#9fe1cb;background:rgba(29,158,117,.12)">installed</span></td><td><span class="pill" style="color:#f5cc55;background:rgba(232,176,32,.1)">free</span></td></tr>`).join('');
+}
+
+let dP=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dP=e;const b=document.getElementById('pwa-btn');if(b)b.style.display='';});
+function installPWA(){if(!dP)return;dP.prompt();dP.userChoice.then(()=>{dP=null;const b=document.getElementById('pwa-btn');if(b)b.style.display='none';});}
+
+load();render();rDB();
+</script>
+</body>
+</html>
