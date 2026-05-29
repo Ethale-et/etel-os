@@ -1781,8 +1781,12 @@ function loadSettingsUI() {
   // Highlight selected model in picker
   const curModel = CFG.openrouterModel;
   document.querySelectorAll('.model-opt').forEach(el => {
-    if (el.dataset.model === curModel) { el.classList.add('selected'); document.getElementById('selected-model-display').textContent = '✅ '+el.querySelector('.model-opt-name').textContent.trim().replace(/FREE|PAID/g,'').trim(); }
-    else el.classList.remove('selected');
+    const nameEl = el.querySelector('.model-opt-name');
+    const dispEl = document.getElementById('selected-model-display');
+    if (el.dataset.model === curModel) {
+      el.classList.add('selected');
+      if (dispEl && nameEl) dispEl.textContent = '✅ ' + nameEl.textContent.trim().replace(/FREE|PAID/g,'').trim();
+    } else { el.classList.remove('selected'); }
   });
   document.getElementById('ollama-url').value = CFG.ollamaUrl;
   document.getElementById('ollama-model').value = CFG.ollamaModel;
@@ -1903,7 +1907,9 @@ function pickModel(el) {
   el.classList.add('selected');
   const model = el.dataset.model;
   document.getElementById('openrouter-model').value = model;
-  document.getElementById('selected-model-display').textContent = '✅ ' + el.querySelector('.model-opt-name').textContent.trim().replace(/FREE|PAID/g,'').trim();
+  const _disp = document.getElementById('selected-model-display');
+  const _name = el.querySelector('.model-opt-name');
+  if (_disp && _name) _disp.textContent = '✅ ' + _name.textContent.trim().replace(/FREE|PAID/g,'').trim();
 }
 
 function setAvatarColor(color) {
