@@ -1374,6 +1374,21 @@ async function callAI(userText, skill, onChunk) {
   // OpenRouter (Claude, GPT-4, Gemini, free Llama...)
   if (CFG.engine === 'openrouter') {
     if (!CFG.openrouterKey) throw new Error('No OpenRouter API key. Add it in Settings → OpenRouter Config.');
+    // Normalize model name — map short names to full OpenRouter paths
+    const OR_MODELS = {
+      'mistral-7b-instruct:free':'mistralai/mistral-7b-instruct:free',
+      'mistral-7b-instruct':'mistralai/mistral-7b-instruct:free',
+      'llama-3.2-3b-instruct:free':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama-3.2-3b-instruct.free':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama-3.2-3b-instruct':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama3':'meta-llama/llama-3.2-3b-instruct:free',
+      'deepseek-r1:free':'deepseek/deepseek-r1:free',
+      'gemma-3-4b-it:free':'google/gemma-3-4b-it:free',
+    };
+    let orModel = CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free';
+    // Fix model name if it doesn't have a provider prefix or has a dot instead of colon
+    orModel = orModel.replace(/\.free$/, ':free');
+    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'mistralai/mistral-7b-instruct:free';
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -1382,7 +1397,7 @@ async function callAI(userText, skill, onChunk) {
         'HTTP-Referer': window.location.origin,
         'X-Title': 'ETEL AI'
       },
-      body: JSON.stringify({model: CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free', messages, stream: false})
+      body: JSON.stringify({model: orModel, messages, stream: false})
     });
     if (!res.ok) {
       const err = await res.json().catch(()=>({}));
@@ -1706,7 +1721,10 @@ function saveSettings() {
   CFG.compatUrl = document.getElementById('compat-url').value||'http://localhost:8000/v1';
   CFG.compatModel = document.getElementById('compat-model').value||'qwen3:0.6b';
   CFG.openrouterKey = document.getElementById('openrouter-key').value||'';
-  CFG.openrouterModel = document.getElementById('openrouter-model').value||'mistralai/mistral-7b-instruct:free';
+  let _orm = (document.getElementById('openrouter-model').value||'mistralai/mistral-7b-instruct:free').replace(/\.free$/,':free');
+  if (!_orm.includes('/')) _orm = 'mistralai/mistral-7b-instruct:free';
+  CFG.openrouterModel = _orm;
+  document.getElementById('openrouter-model').value = _orm;
   CFG.agentName = document.getElementById('agent-name').value||'ETEL Agent';
   CFG.agentPersona = document.getElementById('agent-persona').value||CFG.agentPersona;
   CFG.memoryMode = document.getElementById('memory-mode').value;
@@ -2232,7 +2250,11 @@ async function checkOllamaStatus() {
     }
   } catch(e) {
     dot.style.background = '#dc2626';
-    txt.textContent = 'Ollama not found. Install at ollama.com · then run: ollama serve';
+    if (window.location.protocol === 'https:') {
+      txt.textContent = 'Agents need Ollama running on your PC. Open ETEL at http://localhost:7890 for local agents, or use the chat with OpenRouter.';
+    } else {
+      txt.textContent = 'Ollama not found. Run: ollama serve  (Ollama is installed — just needs to be started)';
+    }
   }
 }
 
