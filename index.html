@@ -744,12 +744,31 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
         <button onclick="checkOllamaStatus()" style="font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid var(--line2);background:var(--bg3);color:var(--tx2);cursor:pointer;">Refresh</button>
       </div>
 
-      <!-- Model Download Buttons -->
+      <!-- Pull More Models -->
       <div style="margin-bottom:14px;">
-        <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;">Free models — download via terminal: <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">ollama pull tinyllama</code></div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="model-download-list">
-          <!-- filled by renderAgentsView() -->
+        <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--tx3);letter-spacing:0.1em;margin-bottom:8px;">INSTALLED MODELS · PULL MORE TO ADD AGENT ROLES</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="model-download-list"></div>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.12);border-radius:3px;">
+          <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--neon);letter-spacing:0.1em;margin-bottom:6px;">ADD MORE AGENTS — run in your terminal:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <code onclick="navigator.clipboard.writeText('ollama pull codellama')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">💻 ollama pull codellama</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull mistral')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">📚 ollama pull mistral</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull llama3')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">✨ ollama pull llama3</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull deepseek-r1:7b')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">🤔 ollama pull deepseek-r1:7b</code>
+          </div>
+          <div style="font-size:10px;color:var(--tx3);margin-top:6px;font-family:'Share Tech Mono',monospace;">Click any command to copy → paste in terminal → then hit Refresh above</div>
         </div>
+      </div>
+
+      <!-- Connect Live Site to Ollama via Cloudflare Tunnel -->
+      <div id="tunnel-guide" style="margin-bottom:14px;padding:10px 14px;background:rgba(255,170,0,0.05);border:1px solid rgba(255,170,0,0.2);border-radius:3px;display:none;">
+        <div style="font-family:'Orbitron',monospace;font-size:9px;color:#ffaa00;letter-spacing:0.1em;margin-bottom:6px;">🌐 CONNECT LIVE SITE TO YOUR LOCAL OLLAMA</div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-family:'Share Tech Mono',monospace;">The live site (HTTPS) can't reach localhost directly. Use Cloudflare Tunnel to expose Ollama:</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <code onclick="navigator.clipboard.writeText('winget install cloudflare.cloudflared')" style="background:var(--bg3);border:1px solid var(--line2);padding:5px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);">Step 1: winget install cloudflare.cloudflared</code>
+          <code onclick="navigator.clipboard.writeText('cloudflared tunnel --url http://localhost:11434')" style="background:var(--bg3);border:1px solid var(--line2);padding:5px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);">Step 2: cloudflared tunnel --url http://localhost:11434</code>
+        </div>
+        <div style="font-size:10px;color:var(--tx3);margin-top:6px;font-family:'Share Tech Mono',monospace;">Copy the https://xxx.trycloudflare.com URL → paste in the Ollama URL box above → Refresh</div>
       </div>
 
       <!-- Swarm Input -->
@@ -1123,7 +1142,7 @@ const CFG = {
   memoryMode: 'auto',
   profileName: 'User',
   profileColor: '#C9A227',
-  openrouterModel: 'mistralai/mistral-7b-instruct:free'
+  openrouterModel: 'openai/gpt-oss-20b:free'
 };
 
 const SKILL_REGISTRY = [
@@ -1388,8 +1407,8 @@ async function callAI(userText, skill, onChunk) {
     if (!CFG.openrouterKey) throw new Error('No OpenRouter API key. Add it in Settings → OpenRouter Config.');
     // Normalize model name — map short names to full OpenRouter paths
     const OR_MODELS = {
-      'mistral-7b-instruct:free':'mistralai/mistral-7b-instruct:free',
-      'mistral-7b-instruct':'mistralai/mistral-7b-instruct:free',
+      'mistral-7b-instruct:free':'openai/gpt-oss-20b:free',
+      'mistral-7b-instruct':'openai/gpt-oss-20b:free',
       'llama-3.2-3b-instruct:free':'meta-llama/llama-3.2-3b-instruct:free',
       'llama-3.2-3b-instruct.free':'meta-llama/llama-3.2-3b-instruct:free',
       'llama-3.2-3b-instruct':'meta-llama/llama-3.2-3b-instruct:free',
@@ -1397,10 +1416,10 @@ async function callAI(userText, skill, onChunk) {
       'deepseek-r1:free':'deepseek/deepseek-r1:free',
       'gemma-3-4b-it:free':'google/gemma-3-4b-it:free',
     };
-    let orModel = CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free';
+    let orModel = CFG.openrouterModel || 'openai/gpt-oss-20b:free';
     // Fix model name if it doesn't have a provider prefix or has a dot instead of colon
     orModel = orModel.replace(/\.free$/, ':free');
-    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'mistralai/mistral-7b-instruct:free';
+    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'openai/gpt-oss-20b:free';
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -1733,8 +1752,8 @@ function saveSettings() {
   CFG.compatUrl = document.getElementById('compat-url').value||'http://localhost:8000/v1';
   CFG.compatModel = document.getElementById('compat-model').value||'qwen3:0.6b';
   CFG.openrouterKey = document.getElementById('openrouter-key').value||'';
-  let _orm = (document.getElementById('openrouter-model').value||'mistralai/mistral-7b-instruct:free').replace(/\.free$/,':free');
-  if (!_orm.includes('/')) _orm = 'mistralai/mistral-7b-instruct:free';
+  let _orm = (document.getElementById('openrouter-model').value||'openai/gpt-oss-20b:free').replace(/\.free$/,':free');
+  if (!_orm.includes('/')) _orm = 'openai/gpt-oss-20b:free';
   CFG.openrouterModel = _orm;
   document.getElementById('openrouter-model').value = _orm;
   CFG.agentName = document.getElementById('agent-name').value||'ETEL Agent';
@@ -1752,6 +1771,9 @@ function loadSettingsUI() {
   document.getElementById('profile-name').value = CFG.profileName || 'User';
   const previewAvatar = document.getElementById('profile-avatar-preview');
   if (previewAvatar) { previewAvatar.textContent = (CFG.profileName||'U')[0].toUpperCase(); previewAvatar.style.background = CFG.profileColor||'#C9A227'; }
+  // Auto-fix broken/discontinued OpenRouter models
+  const _deadModels = ['mistralai/mistral-7b-instruct:free','deepseek/deepseek-r1:free','google/gemma-3-4b-it:free','google/gemma-3-4b-it'];
+  if (_deadModels.includes(CFG.openrouterModel)) { CFG.openrouterModel = 'openai/gpt-oss-20b:free'; saveCfg(); }
   // Highlight selected model in picker
   const curModel = CFG.openrouterModel;
   document.querySelectorAll('.model-opt').forEach(el => {
@@ -1763,7 +1785,7 @@ function loadSettingsUI() {
   document.getElementById('compat-url').value = CFG.compatUrl;
   document.getElementById('compat-model').value = CFG.compatModel;
   document.getElementById('openrouter-key').value = CFG.openrouterKey||'';
-  document.getElementById('openrouter-model').value = CFG.openrouterModel||'mistralai/mistral-7b-instruct:free';
+  document.getElementById('openrouter-model').value = CFG.openrouterModel||'openai/gpt-oss-20b:free';
   document.getElementById('agent-name').value = CFG.agentName;
   document.getElementById('agent-persona').value = CFG.agentPersona;
   document.getElementById('memory-mode').value = CFG.memoryMode;
@@ -1776,7 +1798,7 @@ function loadSettingsUI() {
 
 async function testOpenRouter() {
   const key = document.getElementById('openrouter-key').value.trim();
-  const model = (document.getElementById('openrouter-model').value.trim() || 'mistralai/mistral-7b-instruct:free').replace(/\.free$/,':free');
+  const model = (document.getElementById('openrouter-model').value.trim() || 'openai/gpt-oss-20b:free').replace(/\.free$/,':free');
   const el = document.getElementById('or-test-result');
   if (!key) { el.style.display='block'; el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466'; el.textContent='⚠ Enter your API key first.'; return; }
   el.style.display='block'; el.style.background='rgba(0,180,255,0.08)'; el.style.color='var(--tx2)'; el.textContent='Testing connection...';
@@ -2229,7 +2251,7 @@ function selectModelDD(el) {
 }
 
 function initModelDD() {
-  const cur = CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free';
+  const cur = CFG.openrouterModel || 'openai/gpt-oss-20b:free';
   const opt = document.querySelector('.model-dd-opt[data-model="' + cur + '"]');
   if (opt) {
     opt.classList.add('selected');
@@ -2369,6 +2391,8 @@ function renderAgentCards() {
 function renderAgentsView() {
   renderAgentCards();
   checkOllamaStatus();
+  const tg = document.getElementById('tunnel-guide');
+  if (tg) tg.style.display = window.location.protocol === 'https:' ? 'block' : 'none';
 }
 
 async function runAgentOnPrompt(agent, prompt) {
