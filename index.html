@@ -383,7 +383,7 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
     <div class="live-badge">
       <span class="live-dot"></span>
       <span>LIVE · FREE</span>
-      <span class="engine-badge" id="engine-badge">HERMES</span>
+      <span class="engine-badge" id="engine-badge">OLLAMA</span>
     </div>
   </div>
   <div class="sb-scroll">
@@ -943,11 +943,11 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
 const LOGO_SRC = 'icons/icon-192.png';
 
 const CFG = {
-  engine: 'ollama',             // Direct Ollama (port 11434, CORS-safe from browser)
+  engine: 'ollama',             // Direct Ollama (port 11434) — qwen3:0.6b already installed
   ollamaUrl: 'http://localhost:11434',
-  ollamaModel: 'qwen3:0.6b',    // matches OpenJarvis model
+  ollamaModel: 'qwen3:0.6b',
   compatUrl: 'http://localhost:8000/v1',
-  compatModel: 'qwen3:0.6b',   // model loaded in OpenJarvis
+  compatModel: 'qwen3.5:4b',   // for when OpenJarvis API is ready
   openrouterKey: '',
   openrouterModel: 'mistralai/mistral-7b-instruct:free',
   agentName: 'ETEL Agent',
@@ -1557,7 +1557,8 @@ function saveSettings() {
   saveCfg();
   const pill = CFG.engine==='claude'?'Claude':CFG.engine==='ollama'?CFG.ollamaModel:CFG.engine==='openai-compat'?CFG.compatModel:CFG.engine==='openrouter'?CFG.openrouterModel.split('/').pop():'hermes-3';
   document.getElementById('model-pill').textContent = pill;
-  document.getElementById('engine-badge').textContent = CFG.engine.toUpperCase().substring(0,7);
+  const _badges={'ollama':'OLLAMA','openai-compat':'JARVIS','claude':'CLAUDE','openrouter':'OPENRTR','hermes':'HERMES'};
+  document.getElementById('engine-badge').textContent = _badges[CFG.engine]||CFG.engine.toUpperCase().substring(0,7);
 }
 
 function loadSettingsUI() {
@@ -1583,7 +1584,8 @@ function loadSettingsUI() {
   onEngineChange();
   const pill = CFG.engine==='claude'?'Claude':CFG.engine==='ollama'?CFG.ollamaModel:CFG.engine==='openai-compat'?CFG.compatModel:CFG.engine==='openrouter'?CFG.openrouterModel.split('/').pop():'hermes-3';
   document.getElementById('model-pill').textContent = pill;
-  document.getElementById('engine-badge').textContent = CFG.engine.toUpperCase().substring(0,7);
+  const _badges={'ollama':'OLLAMA','openai-compat':'JARVIS','claude':'CLAUDE','openrouter':'OPENRTR','hermes':'HERMES'};
+  document.getElementById('engine-badge').textContent = _badges[CFG.engine]||CFG.engine.toUpperCase().substring(0,7);
 }
 
 function openSettings() { document.getElementById('settings-modal').classList.add('show'); }
