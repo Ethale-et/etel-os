@@ -1627,9 +1627,11 @@ function loadAll() {
   try{const m=localStorage.getItem('etel_msgs2');if(m)msgs=JSON.parse(m);}catch(e){}
   try{const mm=localStorage.getItem('etel_mem2');if(mm)memory=JSON.parse(mm);}catch(e){}
   loadSkills();
-  // HTTPS + localhost Ollama = blocked by browser (mixed content)
-  // Show banner guiding user to set a Cloudflare Tunnel URL instead
-  if (window.location.protocol === 'https:' && CFG.engine === 'ollama' && (CFG.ollamaUrl||'').startsWith('http:')) {
+  // On HTTPS: engines that need local access or unconfigured API keys fall back to HERMES
+  const _ollamaBlocked = CFG.engine === 'ollama' && (CFG.ollamaUrl||'').startsWith('http:');
+  const _claudeNoKey   = CFG.engine === 'claude';
+  const _openrouterNoKey = CFG.engine === 'openrouter' && !CFG.openrouterKey;
+  if (window.location.protocol === 'https:' && (_ollamaBlocked || _claudeNoKey || _openrouterNoKey)) {
     CFG.engine = 'hermes';
     saveCfg();
     const badge = document.getElementById('engine-badge');
