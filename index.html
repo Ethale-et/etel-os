@@ -1011,13 +1011,17 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
 
         <div class="modal-section-title" style="margin-top:12px;font-size:10px;">🆓 FREE MODELS — click to select</div>
         <div class="model-picker" id="model-picker">
-          <div class="model-opt" data-model="openai/gpt-oss-20b:free" onclick="pickModel(this)">
-            <div class="model-opt-name">GPT OSS 20B <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">OpenAI open model · Fast · ✅ Working now ⭐</div>
-          </div>
           <div class="model-opt" data-model="google/gemma-4-31b-it:free" onclick="pickModel(this)">
             <div class="model-opt-name">Gemma 4 31B <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">Google · Large · ✅ Working now</div>
+            <div class="model-opt-desc">Google · Large · ✅ Working now ⭐</div>
+          </div>
+          <div class="model-opt" data-model="liquid/lfm-2.5-1.2b-instruct:free" onclick="pickModel(this)">
+            <div class="model-opt-name">LFM 1.2B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">Liquid AI · Ultra fast · ✅ Working now</div>
+          </div>
+          <div class="model-opt" data-model="openai/gpt-oss-20b:free" onclick="pickModel(this)">
+            <div class="model-opt-name">GPT OSS 20B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">OpenAI · May be rate-limited at peak times</div>
           </div>
           <div class="model-opt" data-model="meta-llama/llama-3.3-70b-instruct:free" onclick="pickModel(this)">
             <div class="model-opt-name">Llama 3.3 70B <span class="model-tag free">FREE</span></div>
@@ -1136,13 +1140,13 @@ const CFG = {
   compatUrl: 'http://localhost:8000/v1',
   compatModel: 'qwen3.5:4b',   // for when OpenJarvis API is ready
   openrouterKey: '',
-  openrouterModel: 'openai/gpt-oss-20b:free',
+  openrouterModel: 'google/gemma-4-31b-it:free',
   agentName: 'ETEL Agent',
   agentPersona: 'You are ETEL, an advanced AI assistant created by the ETEL Group in Hawassa, Ethiopia. You are intelligent, helpful, multilingual (including Amharic and Tigrinya), and skilled in coding, analysis, writing, research, and more. Always be thoughtful, accurate, and concise.',
   memoryMode: 'auto',
   profileName: 'User',
   profileColor: '#C9A227',
-  openrouterModel: 'openai/gpt-oss-20b:free'
+  openrouterModel: 'google/gemma-4-31b-it:free'
 };
 
 const SKILL_REGISTRY = [
@@ -1407,8 +1411,8 @@ async function callAI(userText, skill, onChunk) {
     if (!CFG.openrouterKey) throw new Error('No OpenRouter API key. Add it in Settings → OpenRouter Config.');
     // Normalize model name — map short names to full OpenRouter paths
     const OR_MODELS = {
-      'mistral-7b-instruct:free':'openai/gpt-oss-20b:free',
-      'mistral-7b-instruct':'openai/gpt-oss-20b:free',
+      'mistral-7b-instruct:free':'google/gemma-4-31b-it:free',
+      'mistral-7b-instruct':'google/gemma-4-31b-it:free',
       'llama-3.2-3b-instruct:free':'meta-llama/llama-3.2-3b-instruct:free',
       'llama-3.2-3b-instruct.free':'meta-llama/llama-3.2-3b-instruct:free',
       'llama-3.2-3b-instruct':'meta-llama/llama-3.2-3b-instruct:free',
@@ -1416,10 +1420,10 @@ async function callAI(userText, skill, onChunk) {
       'deepseek-r1:free':'deepseek/deepseek-r1:free',
       'gemma-3-4b-it:free':'google/gemma-3-4b-it:free',
     };
-    let orModel = CFG.openrouterModel || 'openai/gpt-oss-20b:free';
+    let orModel = CFG.openrouterModel || 'google/gemma-4-31b-it:free';
     // Fix model name if it doesn't have a provider prefix or has a dot instead of colon
     orModel = orModel.replace(/\.free$/, ':free');
-    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'openai/gpt-oss-20b:free';
+    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'google/gemma-4-31b-it:free';
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -1752,8 +1756,8 @@ function saveSettings() {
   CFG.compatUrl = document.getElementById('compat-url').value||'http://localhost:8000/v1';
   CFG.compatModel = document.getElementById('compat-model').value||'qwen3:0.6b';
   CFG.openrouterKey = document.getElementById('openrouter-key').value||'';
-  let _orm = (document.getElementById('openrouter-model').value||'openai/gpt-oss-20b:free').replace(/\.free$/,':free');
-  if (!_orm.includes('/')) _orm = 'openai/gpt-oss-20b:free';
+  let _orm = (document.getElementById('openrouter-model').value||'google/gemma-4-31b-it:free').replace(/\.free$/,':free');
+  if (!_orm.includes('/')) _orm = 'google/gemma-4-31b-it:free';
   CFG.openrouterModel = _orm;
   document.getElementById('openrouter-model').value = _orm;
   CFG.agentName = document.getElementById('agent-name').value||'ETEL Agent';
@@ -1773,7 +1777,7 @@ function loadSettingsUI() {
   if (previewAvatar) { previewAvatar.textContent = (CFG.profileName||'U')[0].toUpperCase(); previewAvatar.style.background = CFG.profileColor||'#C9A227'; }
   // Auto-fix broken/discontinued OpenRouter models
   const _deadModels = ['mistralai/mistral-7b-instruct:free','deepseek/deepseek-r1:free','google/gemma-3-4b-it:free','google/gemma-3-4b-it'];
-  if (_deadModels.includes(CFG.openrouterModel)) { CFG.openrouterModel = 'openai/gpt-oss-20b:free'; saveCfg(); }
+  if (_deadModels.includes(CFG.openrouterModel)) { CFG.openrouterModel = 'google/gemma-4-31b-it:free'; saveCfg(); }
   // Highlight selected model in picker
   const curModel = CFG.openrouterModel;
   document.querySelectorAll('.model-opt').forEach(el => {
@@ -1785,7 +1789,7 @@ function loadSettingsUI() {
   document.getElementById('compat-url').value = CFG.compatUrl;
   document.getElementById('compat-model').value = CFG.compatModel;
   document.getElementById('openrouter-key').value = CFG.openrouterKey||'';
-  document.getElementById('openrouter-model').value = CFG.openrouterModel||'openai/gpt-oss-20b:free';
+  document.getElementById('openrouter-model').value = CFG.openrouterModel||'google/gemma-4-31b-it:free';
   document.getElementById('agent-name').value = CFG.agentName;
   document.getElementById('agent-persona').value = CFG.agentPersona;
   document.getElementById('memory-mode').value = CFG.memoryMode;
@@ -1798,7 +1802,7 @@ function loadSettingsUI() {
 
 async function testOpenRouter() {
   const key = document.getElementById('openrouter-key').value.trim();
-  const model = (document.getElementById('openrouter-model').value.trim() || 'openai/gpt-oss-20b:free').replace(/\.free$/,':free');
+  const model = (document.getElementById('openrouter-model').value.trim() || 'google/gemma-4-31b-it:free').replace(/\.free$/,':free');
   const el = document.getElementById('or-test-result');
   if (!key) { el.style.display='block'; el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466'; el.textContent='⚠ Enter your API key first.'; return; }
   el.style.display='block'; el.style.background='rgba(0,180,255,0.08)'; el.style.color='var(--tx2)'; el.textContent='Testing connection...';
@@ -2251,7 +2255,7 @@ function selectModelDD(el) {
 }
 
 function initModelDD() {
-  const cur = CFG.openrouterModel || 'openai/gpt-oss-20b:free';
+  const cur = CFG.openrouterModel || 'google/gemma-4-31b-it:free';
   const opt = document.querySelector('.model-dd-opt[data-model="' + cur + '"]');
   if (opt) {
     opt.classList.add('selected');
