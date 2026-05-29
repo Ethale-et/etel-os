@@ -5,11 +5,11 @@ const CACHE = 'etel-v1';
 const SKILL_CACHE = 'etel-skills-v1';
 
 const CORE_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  '/etel-os/',
+  '/etel-os/index.html',
+  '/etel-os/manifest.json',
+  '/etel-os/icons/icon-192.png',
+  '/etel-os/icons/icon-512.png',
 ];
 
 // ── INSTALL: cache core files ──
