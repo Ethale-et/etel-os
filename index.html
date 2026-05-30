@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#1a1a19">
+<meta name="theme-color" content="#020b18">
 <meta name="description" content="ETEL AI · ኢቴሌ Agent OS — Intelligence, Memory, Agency.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,20 +11,22 @@
 <title>ETEL AI · Agent OS</title>
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&family=Noto+Serif+Ethiopic:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#ffffff;--bg2:#f9f9f8;--bg3:#f3f3f1;--bg4:#eaeae7;
-  --line:rgba(0,0,0,0.07);--line2:rgba(0,0,0,0.1);
-  --gold:#d97706;--gold-l:#b45309;--gold-glow:rgba(217,119,6,0.08);--gold-dim:rgba(217,119,6,0.06);
-  --tx:#1a1a19;--tx2:#5c5b57;--tx3:#9b9a96;
-  --green:#16a34a;--green-bg:rgba(22,163,74,0.08);
-  --blue:#2563eb;--blue-bg:rgba(37,99,235,0.08);
-  --coral:#dc4f2a;--purple:#7c3aed;
-  --r:10px;--sidebar:256px;
-  --font-display:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--font-am:'Noto Serif Ethiopic',serif;
+  --bg:#020b18;--bg2:#03111f;--bg3:#071828;--bg4:#0c2235;
+  --line:rgba(255,215,0,0.12);--line2:rgba(255,215,0,0.22);
+  --gold:#FFD700;--gold-l:#FFB800;--gold-glow:rgba(255,215,0,0.10);--gold-dim:rgba(255,215,0,0.06);
+  --tx:#FFF8E7;--tx2:#D4AF37;--tx3:#8B6914;
+  --green:#00ff99;--green-bg:rgba(0,255,153,0.08);
+  --blue:#00aaff;--blue-bg:rgba(0,170,255,0.10);
+  --coral:#ff4466;--purple:#aa44ff;
+  --r:4px;--sidebar:240px;
+  --font-display:'Orbitron',monospace;--font-body:'Share Tech Mono',monospace;--font-am:'Noto Serif Ethiopic',serif;
+  --neon:#FFD700;--neon-glow:0 0 8px rgba(255,215,0,0.6),0 0 20px rgba(255,215,0,0.3);
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
 .shell{display:flex;height:100vh;overflow:hidden;}
@@ -352,8 +354,189 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
 .model-dd-opt .mdo-name{font-size:13px;color:var(--tx);display:flex;align-items:center;gap:6px;}
 .model-dd-opt .mdo-desc{font-size:11px;color:var(--tx3);margin-top:1px;}
 .mdo-tag{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;}
-.mdo-tag.free{background:rgba(22,163,74,0.1);color:var(--green);}
+.mdo-tag.free{background:rgba(0,255,153,0.1);color:var(--green);}
 .mdo-tag.paid{background:var(--blue-bg);color:var(--blue);}
+
+/* ═══════════════════════════════════════════
+   JARVIS HUD THEME OVERRIDES
+═══════════════════════════════════════════ */
+
+/* Grid background */
+html,body{
+  background:#020b18;
+  background-image:
+    linear-gradient(rgba(255,215,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,215,0,0.04) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+
+/* Scanline overlay */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+}
+
+/* Sidebar — HUD panel */
+.sidebar{
+  background:rgba(2,11,24,0.95);
+  border-right:1px solid rgba(255,215,0,0.25);
+  box-shadow:4px 0 24px rgba(255,215,0,0.08);
+}
+.sb-head{border-bottom:1px solid rgba(255,215,0,0.2);padding:16px 14px 12px;}
+.logo-text .en{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:0.12em;color:var(--neon);text-shadow:var(--neon-glow);}
+.logo-text .am{color:var(--tx3);font-size:10px;}
+.logo-img{border:1px solid rgba(255,215,0,0.4);border-radius:4px;box-shadow:0 0 10px rgba(255,215,0,0.3);}
+
+/* Live badge */
+.live-badge{color:var(--neon);font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;}
+.live-dot{background:var(--neon);box-shadow:0 0 6px var(--neon);}
+.engine-badge{background:rgba(255,215,0,0.1)!important;color:var(--neon)!important;border:1px solid rgba(255,215,0,0.3);font-family:'Orbitron',monospace;letter-spacing:0.08em;}
+
+/* Nav items */
+.sb-sec{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.15em;color:var(--tx3);padding:12px 14px 4px;}
+.nav-item{border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:0.05em;color:var(--tx2);border-left:2px solid transparent;}
+.nav-item:hover{background:rgba(255,215,0,0.06);color:var(--neon);border-left-color:rgba(255,215,0,0.4);}
+.nav-item.active{background:rgba(255,215,0,0.08);color:var(--neon);border-left:2px solid var(--neon);box-shadow:inset 0 0 12px rgba(255,215,0,0.05);}
+.nav-badge{background:var(--neon);color:#020b18;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;}
+
+/* Main area */
+.main{background:transparent;}
+.header{background:rgba(2,11,24,0.9);border-bottom:1px solid rgba(255,215,0,0.2);backdrop-filter:blur(10px);}
+.header-title{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:0.15em;color:var(--neon);}
+.model-pill{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:0.08em;border-radius:2px;}
+.header-btn{color:var(--tx3);}
+.header-btn:hover{background:rgba(255,215,0,0.1);color:var(--neon);}
+
+/* Chat messages */
+.msg-user{
+  background:rgba(255,215,0,0.12)!important;
+  border:1px solid rgba(255,215,0,0.3)!important;
+  border-radius:2px 8px 8px 2px!important;
+  color:var(--neon)!important;
+  font-family:'Share Tech Mono',monospace!important;
+  box-shadow:0 0 12px rgba(255,215,0,0.1)!important;
+}
+.msg-agent,.msg.agent{
+  background:rgba(0,30,50,0.6)!important;
+  border:none!important;
+  font-family:'Share Tech Mono',monospace!important;
+  color:var(--tx)!important;
+}
+.msg-content{font-family:'Share Tech Mono',monospace;font-size:13px;line-height:1.7;color:var(--tx);}
+.msg-content strong{color:var(--neon);}
+.msg-content code{background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);color:#FFD700;border-radius:2px;}
+.msg-content pre{background:rgba(0,10,20,0.8)!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(255,215,0,0.08);}
+.msg-content pre code{background:transparent!important;border:none!important;color:#FFD700!important;}
+
+/* Skill label on messages */
+.msg-skill{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;color:var(--tx3);}
+
+/* Thinking bubble */
+.thinking-bubble{background:rgba(0,30,50,0.8)!important;border:1px solid rgba(255,215,0,0.2)!important;}
+.thinking-text{font-family:'Orbitron',monospace!important;letter-spacing:0.1em!important;color:var(--neon)!important;}
+.dot-pulse span{background:var(--neon)!important;box-shadow:0 0 6px var(--neon)!important;}
+
+/* Input area */
+.input-wrap{background:rgba(2,11,24,0.95)!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(255,215,0,0.08)!important;}
+.input-wrap:focus-within{border-color:rgba(255,215,0,0.5)!important;box-shadow:0 0 20px rgba(255,215,0,0.15)!important;}
+.input-wrap textarea{color:var(--neon)!important;font-family:'Share Tech Mono',monospace!important;font-size:13px!important;}
+.input-wrap textarea::placeholder{color:rgba(255,215,0,0.35)!important;}
+.send-btn{background:var(--neon)!important;border-radius:3px!important;box-shadow:0 0 12px rgba(255,215,0,0.4)!important;}
+.send-btn:hover{box-shadow:0 0 20px rgba(255,215,0,0.7)!important;}
+
+/* Quick chips */
+.chip,.quick-chip{background:rgba(255,215,0,0.07)!important;border:1px solid rgba(255,215,0,0.2)!important;color:var(--tx2)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;font-size:11px!important;}
+.chip:hover,.quick-chip:hover{background:rgba(255,215,0,0.15)!important;color:var(--neon)!important;border-color:rgba(255,215,0,0.4)!important;}
+
+/* Welcome screen — central orb */
+.welcome{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.welcome-logo{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:20px;}
+.welcome-logo-img{
+  width:260px;height:260px;border-radius:50%;object-fit:cover;
+  border:2px solid rgba(255,215,0,0.4);
+  box-shadow:0 0 60px rgba(255,215,0,0.35),0 0 120px rgba(255,215,0,0.15);
+  animation:logo-breathe 3s ease-in-out infinite;
+  position:relative;z-index:2;
+}
+.welcome-logo-ring{
+  position:absolute;width:290px;height:290px;border-radius:50%;
+  border:1px solid rgba(255,215,0,0.25);
+  animation:logo-ring 4s linear infinite;
+  z-index:1;
+}
+.welcome-logo-ring2{
+  position:absolute;width:320px;height:320px;border-radius:50%;
+  border:1px solid rgba(255,215,0,0.1);
+  animation:logo-ring 6s linear infinite reverse;
+  z-index:1;
+}
+.welcome-speak-bars{
+  position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:flex-end;gap:3px;height:20px;z-index:3;
+  opacity:0;transition:opacity 0.3s;
+}
+.welcome-speak-bars.active{opacity:1;}
+.welcome-speak-bars span{
+  width:4px;border-radius:2px;background:var(--neon);
+  animation:speak-bar 0.6s ease-in-out infinite alternate;
+}
+.welcome-speak-bars span:nth-child(1){animation-delay:0s;   height:6px;}
+.welcome-speak-bars span:nth-child(2){animation-delay:0.1s; height:14px;}
+.welcome-speak-bars span:nth-child(3){animation-delay:0.2s; height:20px;}
+.welcome-speak-bars span:nth-child(4){animation-delay:0.3s; height:12px;}
+.welcome-speak-bars span:nth-child(5){animation-delay:0.4s; height:18px;}
+.welcome-speak-bars span:nth-child(6){animation-delay:0.1s; height:8px;}
+.welcome-speak-bars span:nth-child(7){animation-delay:0.25s;height:16px;}
+.welcome::before{display:none;}
+.welcome::after{display:none;}
+@keyframes logo-breathe{
+  0%,100%{box-shadow:0 0 60px rgba(255,215,0,0.35),0 0 120px rgba(255,215,0,0.15);transform:scale(1);}
+  50%{box-shadow:0 0 80px rgba(255,215,0,0.55),0 0 160px rgba(255,215,0,0.25);transform:scale(1.03);}
+}
+@keyframes logo-ring{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+@keyframes speak-bar{
+  0%{transform:scaleY(0.4);}
+  100%{transform:scaleY(1);}
+}
+.welcome-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;letter-spacing:0.2em;color:var(--neon);text-shadow:var(--neon-glow);text-transform:uppercase;}
+.welcome-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--tx3);letter-spacing:0.06em;margin-top:6px;text-align:center;}
+.welcome-chips{margin-top:20px;}
+.welcome-chip{background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);color:var(--tx2);font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;border-radius:2px;padding:7px 14px;}
+.welcome-chip:hover{background:rgba(255,215,0,0.15);color:var(--neon);border-color:var(--neon);box-shadow:0 0 10px rgba(255,215,0,0.2);}
+
+/* Modal/overlay */
+.modal-overlay{background:rgba(1,6,14,0.92)!important;backdrop-filter:blur(8px)!important;}
+.modal{background:#030f1e!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 40px rgba(255,215,0,0.15)!important;}
+.modal-title{font-family:'Orbitron',monospace!important;letter-spacing:0.1em!important;color:var(--neon)!important;}
+input,select,textarea.modal-ta{background:rgba(255,215,0,0.05)!important;border:1px solid rgba(255,215,0,0.2)!important;color:var(--tx)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;}
+input:focus,select:focus,textarea.modal-ta:focus{border-color:var(--neon)!important;box-shadow:0 0 8px rgba(255,215,0,0.2)!important;}
+label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter-spacing:0.08em!important;color:var(--tx3)!important;}
+.btn-primary{background:transparent!important;border:1px solid var(--neon)!important;color:var(--neon)!important;font-family:'Orbitron',monospace!important;font-size:10px!important;letter-spacing:0.1em!important;border-radius:2px!important;}
+.btn-primary:hover{background:rgba(255,215,0,0.1)!important;box-shadow:0 0 12px rgba(255,215,0,0.3)!important;}
+
+/* Skills, memory, database panels */
+.skill-card{background:rgba(0,20,40,0.6)!important;border:1px solid rgba(255,215,0,0.15)!important;border-radius:4px!important;}
+.skill-card:hover{border-color:rgba(255,215,0,0.4)!important;box-shadow:0 0 12px rgba(255,215,0,0.1)!important;}
+.skill-name{font-family:'Orbitron',monospace!important;font-size:11px!important;color:var(--neon)!important;}
+.mem-entry{background:rgba(0,20,40,0.5)!important;border:1px solid rgba(255,215,0,0.12)!important;border-radius:2px!important;}
+
+/* Section headers */
+.section-head{font-family:'Orbitron',monospace!important;letter-spacing:0.15em!important;color:var(--neon)!important;font-size:11px!important;}
+
+/* Scrollbars */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,215,0,0.5);}
+
+/* Bottom sb info */
+.sb-bottom{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.08em;color:var(--tx3);border-top:1px solid rgba(255,215,0,0.12);}
+
+/* Info banner */
+#ollama-tunnel-banner{background:#020b18!important;border:1px solid rgba(255,215,0,0.3)!important;color:var(--tx)!important;font-family:'Share Tech Mono',monospace!important;box-shadow:0 0 20px rgba(255,215,0,0.15)!important;}
 </style>
 </head>
 <body>
@@ -383,7 +566,7 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
     <div class="live-badge">
       <span class="live-dot"></span>
       <span>LIVE · FREE</span>
-      <span class="engine-badge" id="engine-badge">HERMES</span>
+      <span class="engine-badge" id="engine-badge">OLLAMA</span>
     </div>
   </div>
   <div class="sb-scroll">
@@ -409,6 +592,11 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
       <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 11l2 2 4-4"/></svg>
       <span>Agents</span>
       <span class="nav-badge" style="background:rgba(201,162,39,0.15);color:#C9A227;">NEW</span>
+    </div>
+    <div class="nav-item" onclick="switchView('projects',this)">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="18" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="3" width="6" height="18" rx="1"/></svg>
+      <span>Projects</span>
+      <span class="nav-badge" style="background:rgba(255,215,0,0.12);color:var(--gold);" id="projects-online-badge">—</span>
     </div>
     <div class="nav-item" onclick="switchView('updater',this)">
       <svg viewBox="0 0 24 24"><path d="M21 2H3v16h5v4l4-4h9V2z"/><path d="M9.5 9h5M9.5 12h3"/></svg>
@@ -588,20 +776,40 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
         <button onclick="checkOllamaStatus()" style="font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid var(--line2);background:var(--bg3);color:var(--tx2);cursor:pointer;">Refresh</button>
       </div>
 
-      <!-- Model Download Buttons -->
+      <!-- Pull More Models -->
       <div style="margin-bottom:14px;">
-        <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;">Free models — download via terminal: <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">ollama pull tinyllama</code></div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="model-download-list">
-          <!-- filled by renderAgentsView() -->
+        <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--tx3);letter-spacing:0.1em;margin-bottom:8px;">INSTALLED MODELS · PULL MORE TO ADD AGENT ROLES</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;" id="model-download-list"></div>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.12);border-radius:3px;">
+          <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--neon);letter-spacing:0.1em;margin-bottom:6px;">ADD MORE AGENTS — run in your terminal:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <code onclick="navigator.clipboard.writeText('ollama pull codellama')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">💻 ollama pull codellama</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull mistral')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">📚 ollama pull mistral</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull llama3')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">✨ ollama pull llama3</code>
+            <code onclick="navigator.clipboard.writeText('ollama pull deepseek-r1:7b')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">🤔 ollama pull deepseek-r1:7b</code>
+          </div>
+          <div style="font-size:10px;color:var(--tx3);margin-top:6px;font-family:'Share Tech Mono',monospace;">Click any command to copy → paste in terminal → then hit Refresh above</div>
         </div>
       </div>
 
-      <!-- Broadcast Input -->
-      <div style="background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:12px;margin-bottom:14px;">
-        <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-weight:500;">BROADCAST — send one prompt to all agents at once</div>
+      <!-- Connect Live Site to Ollama via Cloudflare Tunnel -->
+      <div id="tunnel-guide" style="margin-bottom:14px;padding:10px 14px;background:rgba(255,170,0,0.05);border:1px solid rgba(255,170,0,0.2);border-radius:3px;display:none;">
+        <div style="font-family:'Orbitron',monospace;font-size:9px;color:#ffaa00;letter-spacing:0.1em;margin-bottom:6px;">🌐 CONNECT LIVE SITE TO YOUR LOCAL OLLAMA</div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-family:'Share Tech Mono',monospace;">The live site (HTTPS) can't reach localhost directly. Use Cloudflare Tunnel to expose Ollama:</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <code onclick="navigator.clipboard.writeText('winget install cloudflare.cloudflared')" style="background:var(--bg3);border:1px solid var(--line2);padding:5px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);">Step 1: winget install cloudflare.cloudflared</code>
+          <code onclick="navigator.clipboard.writeText('cloudflared tunnel --url http://localhost:11434')" style="background:var(--bg3);border:1px solid var(--line2);padding:5px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);">Step 2: cloudflared tunnel --url http://localhost:11434</code>
+        </div>
+        <div style="font-size:10px;color:var(--tx3);margin-top:6px;font-family:'Share Tech Mono',monospace;">Copy the https://xxx.trycloudflare.com URL → paste in the Ollama URL box above → Refresh</div>
+      </div>
+
+      <!-- Swarm Input -->
+      <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.2);border-radius:4px;padding:14px;margin-bottom:14px;box-shadow:0 0 20px rgba(255,215,0,0.06);">
+        <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--neon);letter-spacing:0.12em;margin-bottom:6px;">⚡ SWARM MODE</div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;font-family:'Share Tech Mono',monospace;">One idea → all agents work in parallel → results appear in Chat</div>
         <div style="display:flex;gap:8px;">
-          <input id="agent-broadcast-input" placeholder="Ask all agents..." style="flex:1;padding:8px 12px;border-radius:6px;border:1px solid var(--line2);background:var(--bg);color:var(--tx);font-size:13px;">
-          <button onclick="broadcastToAgents()" style="padding:8px 16px;border-radius:6px;background:var(--gold);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer;">Run All</button>
+          <input id="agent-broadcast-input" placeholder="Enter your idea, question or task..." style="flex:1;padding:9px 14px;border-radius:3px;border:1px solid rgba(255,215,0,0.25);background:var(--bg);color:var(--neon);font-size:13px;font-family:'Share Tech Mono',monospace;" onkeydown="if(event.key==='Enter')broadcastToAgents()">
+          <button onclick="broadcastToAgents()" style="padding:9px 18px;border-radius:3px;background:var(--neon);color:#020b18;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'Orbitron',monospace;letter-spacing:0.08em;box-shadow:0 0 14px rgba(255,215,0,0.4);">⚡ LAUNCH</button>
         </div>
       </div>
 
@@ -641,6 +849,9 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
       </table>
     </div>
   </div>
+
+  <!-- PROJECTS VIEW -->
+  <div id="projects-view" style="display:none;flex:1;overflow-y:auto;background:var(--bg);"></div>
 
   <!-- UPDATER VIEW -->
   <div id="updater-view" style="display:none;flex:1;overflow-y:auto;">
@@ -815,50 +1026,65 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
       </div>
       <!-- OpenRouter -->
       <div class="modal-section" id="openrouter-section" style="display:none;">
-        <div class="modal-section-title">OpenRouter Config</div>
-        <div class="input-row"><label>API Key</label><input type="password" id="openrouter-key" placeholder="sk-or-..."></div>
-        <div class="modal-section-title" style="margin-top:10px;font-size:10px;">Select Model</div>
+        <div class="modal-section-title">🌐 OpenRouter — Free Cloud AI</div>
+        <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;font-family:var(--font-body);">Works on the live site · No local install needed · Free tier available</div>
+
+        <div style="margin-bottom:10px;">
+          <a href="https://openrouter.ai/keys" target="_blank" style="display:inline-block;padding:7px 14px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);border-radius:3px;color:var(--neon);font-size:11px;font-family:var(--font-display);text-decoration:none;letter-spacing:0.06em;">
+            → GET FREE KEY AT OPENROUTER.AI
+          </a>
+        </div>
+
+        <div class="input-row">
+          <label>API Key</label>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input type="password" id="openrouter-key" placeholder="sk-or-v1-..." style="flex:1;">
+            <button onclick="testOpenRouter()" style="padding:7px 12px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);color:var(--neon);border-radius:3px;cursor:pointer;font-size:11px;white-space:nowrap;font-family:var(--font-display);">Test</button>
+          </div>
+          <div id="or-test-result" style="font-size:11px;margin-top:6px;padding:6px 10px;border-radius:3px;display:none;"></div>
+        </div>
+
+        <div class="modal-section-title" style="margin-top:12px;font-size:10px;">🆓 FREE MODELS — click to select</div>
         <div class="model-picker" id="model-picker">
-          <div class="model-group-label">🆓 FREE MODELS</div>
-          <div class="model-opt" data-model="mistralai/mistral-7b-instruct:free" onclick="pickModel(this)">
-            <div class="model-opt-name">Mistral 7B <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">Fast · Good quality · Best free option</div>
+          <div class="model-opt" data-model="google/gemma-4-31b-it:free" onclick="pickModel(this)">
+            <div class="model-opt-name">Gemma 4 31B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">Google · Large · ✅ Working now ⭐</div>
+          </div>
+          <div class="model-opt" data-model="liquid/lfm-2.5-1.2b-instruct:free" onclick="pickModel(this)">
+            <div class="model-opt-name">LFM 1.2B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">Liquid AI · Ultra fast · ✅ Working now</div>
+          </div>
+          <div class="model-opt" data-model="openai/gpt-oss-20b:free" onclick="pickModel(this)">
+            <div class="model-opt-name">GPT OSS 20B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">OpenAI · May be rate-limited at peak times</div>
+          </div>
+          <div class="model-opt" data-model="meta-llama/llama-3.3-70b-instruct:free" onclick="pickModel(this)">
+            <div class="model-opt-name">Llama 3.3 70B <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">Meta · High quality · May be slow</div>
           </div>
           <div class="model-opt" data-model="meta-llama/llama-3.2-3b-instruct:free" onclick="pickModel(this)">
             <div class="model-opt-name">Llama 3.2 3B <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">Meta · Fast responses · Multilingual</div>
+            <div class="model-opt-desc">Meta · Lightweight · Fast</div>
           </div>
-          <div class="model-opt" data-model="google/gemma-3-4b-it:free" onclick="pickModel(this)">
-            <div class="model-opt-name">Gemma 3 4B <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">Google · Good reasoning · Free tier</div>
+          <div class="model-opt" data-model="deepseek/deepseek-v4-flash:free" onclick="pickModel(this)">
+            <div class="model-opt-name">DeepSeek V4 Flash <span class="model-tag free">FREE</span></div>
+            <div class="model-opt-desc">DeepSeek · Fast reasoning</div>
           </div>
-          <div class="model-opt" data-model="deepseek/deepseek-r1:free" onclick="pickModel(this)">
-            <div class="model-opt-name">DeepSeek R1 <span class="model-tag free">FREE</span></div>
-            <div class="model-opt-desc">Strong reasoning · Great for code</div>
-          </div>
-          <div class="model-group-label" style="margin-top:10px;">⭐ PREMIUM MODELS</div>
-          <div class="model-opt" data-model="anthropic/claude-3-haiku" onclick="pickModel(this)">
-            <div class="model-opt-name">Claude 3 Haiku <span class="model-tag paid">PAID</span></div>
-            <div class="model-opt-desc">Anthropic · Fast · Excellent quality</div>
-          </div>
+          <div class="model-group-label" style="margin-top:6px;">⭐ PREMIUM</div>
           <div class="model-opt" data-model="anthropic/claude-3.5-sonnet" onclick="pickModel(this)">
             <div class="model-opt-name">Claude 3.5 Sonnet <span class="model-tag paid">PAID</span></div>
-            <div class="model-opt-desc">Anthropic · Best quality · Recommended</div>
+            <div class="model-opt-desc">Best quality · Recommended</div>
           </div>
           <div class="model-opt" data-model="openai/gpt-4o-mini" onclick="pickModel(this)">
             <div class="model-opt-name">GPT-4o Mini <span class="model-tag paid">PAID</span></div>
             <div class="model-opt-desc">OpenAI · Fast · Affordable</div>
           </div>
-          <div class="model-opt" data-model="google/gemini-flash-1.5" onclick="pickModel(this)">
-            <div class="model-opt-name">Gemini 1.5 Flash <span class="model-tag paid">PAID</span></div>
-            <div class="model-opt-desc">Google · Very fast · Long context</div>
-          </div>
         </div>
+
         <div class="input-row" style="margin-top:8px;">
-          <label>Custom Model ID</label>
-          <input type="text" id="openrouter-model" placeholder="or type model ID manually">
+          <label>Selected Model</label>
+          <input type="text" id="openrouter-model" placeholder="click a model above or type ID manually">
         </div>
-        <div class="info-box">Get free key at <strong>openrouter.ai</strong> · <span id="selected-model-display" style="color:var(--gold-l);">No model selected</span></div>
       </div>
       <div class="modal-section">
         <div class="modal-section-title">Your Profile</div>
@@ -940,22 +1166,22 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
 // ═══════════════════════════════════════════
 
 // FIX: logo is a path, not fake base64
-const LOGO_SRC = 'icons/icon-192.png';
+const LOGO_SRC = 'icons/icon-192.png?' + Date.now(); // cache-bust to bypass old SW
 
 const CFG = {
-  engine: 'ollama',             // Direct Ollama (port 11434, CORS-safe from browser)
+  engine: 'ollama',             // Direct Ollama (port 11434) — qwen3:0.6b already installed
   ollamaUrl: 'http://localhost:11434',
-  ollamaModel: 'qwen3:0.6b',    // matches OpenJarvis model
+  ollamaModel: 'qwen3:0.6b',
   compatUrl: 'http://localhost:8000/v1',
-  compatModel: 'qwen3:0.6b',   // model loaded in OpenJarvis
+  compatModel: 'qwen3.5:4b',   // for when OpenJarvis API is ready
   openrouterKey: '',
-  openrouterModel: 'mistralai/mistral-7b-instruct:free',
+  openrouterModel: 'google/gemma-4-31b-it:free',
   agentName: 'ETEL Agent',
   agentPersona: 'You are ETEL, an advanced AI assistant created by the ETEL Group in Hawassa, Ethiopia. You are intelligent, helpful, multilingual (including Amharic and Tigrinya), and skilled in coding, analysis, writing, research, and more. Always be thoughtful, accurate, and concise.',
   memoryMode: 'auto',
   profileName: 'User',
   profileColor: '#C9A227',
-  openrouterModel: 'mistralai/mistral-7b-instruct:free'
+  openrouterModel: 'google/gemma-4-31b-it:free'
 };
 
 const SKILL_REGISTRY = [
@@ -1218,6 +1444,21 @@ async function callAI(userText, skill, onChunk) {
   // OpenRouter (Claude, GPT-4, Gemini, free Llama...)
   if (CFG.engine === 'openrouter') {
     if (!CFG.openrouterKey) throw new Error('No OpenRouter API key. Add it in Settings → OpenRouter Config.');
+    // Normalize model name — map short names to full OpenRouter paths
+    const OR_MODELS = {
+      'mistral-7b-instruct:free':'google/gemma-4-31b-it:free',
+      'mistral-7b-instruct':'google/gemma-4-31b-it:free',
+      'llama-3.2-3b-instruct:free':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama-3.2-3b-instruct.free':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama-3.2-3b-instruct':'meta-llama/llama-3.2-3b-instruct:free',
+      'llama3':'meta-llama/llama-3.2-3b-instruct:free',
+      'deepseek-r1:free':'deepseek/deepseek-r1:free',
+      'gemma-3-4b-it:free':'google/gemma-3-4b-it:free',
+    };
+    let orModel = CFG.openrouterModel || 'google/gemma-4-31b-it:free';
+    // Fix model name if it doesn't have a provider prefix or has a dot instead of colon
+    orModel = orModel.replace(/\.free$/, ':free');
+    if (!orModel.includes('/')) orModel = OR_MODELS[orModel] || 'google/gemma-4-31b-it:free';
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -1226,7 +1467,7 @@ async function callAI(userText, skill, onChunk) {
         'HTTP-Referer': window.location.origin,
         'X-Title': 'ETEL AI'
       },
-      body: JSON.stringify({model: CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free', messages, stream: false})
+      body: JSON.stringify({model: orModel, messages, stream: false})
     });
     if (!res.ok) {
       const err = await res.json().catch(()=>({}));
@@ -1358,7 +1599,14 @@ function renderMsgs() {
   const c = document.getElementById('msgs-container');
   if (!msgs.length) {
     c.innerHTML = `<div class="welcome">
-      <div class="welcome-logo"><img src="${LOGO_SRC}" alt="ETEL" onerror="this.style.display='none'"></div>
+      <div class="welcome-logo" id="welcome-logo-wrap">
+        <div class="welcome-logo-ring"></div>
+        <div class="welcome-logo-ring2"></div>
+        <img class="welcome-logo-img" src="${LOGO_SRC}" alt="ETEL" onerror="this.src='icons/icon-192.png'">
+        <div class="welcome-speak-bars" id="speak-bars">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
       <div class="welcome-title">ETEL Agent OS</div>
       <div class="welcome-sub">50 AI skills · Real AI built-in · Local memory · Amharic support · Your own domain</div>
       <div class="welcome-chips">
@@ -1398,7 +1646,16 @@ function renderMsgs() {
   c.scrollTop = c.scrollHeight;
 }
 
+function setLogoSpeaking(active) {
+  const bars = document.getElementById('speak-bars');
+  if (bars) bars.classList.toggle('active', active);
+  const img = document.querySelector('.welcome-logo-img');
+  if (img) img.style.boxShadow = active
+    ? '0 0 80px rgba(255,215,0,0.7),0 0 160px rgba(255,215,0,0.35)'
+    : '';
+}
 function showThinking() {
+  setLogoSpeaking(true);
   const c = document.getElementById('msgs-container');
   const el = document.createElement('div');
   el.className = 'msg agent'; el.id = 'thinking-row';
@@ -1406,7 +1663,7 @@ function showThinking() {
     <div class="thinking-row"><div class="thinking-bubble"><div class="dot-pulse"><span></span><span></span><span></span></div><span class="thinking-text">Thinking</span></div></div>`;
   c.appendChild(el); c.scrollTop = c.scrollHeight;
 }
-function hideThinking() { document.getElementById('thinking-row')?.remove(); }
+function hideThinking() { document.getElementById('thinking-row')?.remove(); setLogoSpeaking(false); }
 
 // ── COPY ──
 function copyMsg(idx, btn) {
@@ -1507,11 +1764,12 @@ function switchView(v, el) {
   if (vEl) { vEl.style.display='flex'; vEl.style.flexDirection='column'; }
   document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
   if (el) el.classList.add('active');
-  document.getElementById('view-title').textContent = {chat:'CHAT',skills:'SKILLS',memory:'MEMORY VAULT',database:'DATABASE',updater:'UPDATER',agents:'AGENTS'}[v]||'ETEL';
+  document.getElementById('view-title').textContent = {chat:'CHAT',skills:'SKILLS',memory:'MEMORY VAULT',database:'DATABASE',updater:'UPDATER',agents:'AGENTS',projects:'PROJECTS'}[v]||'ETEL';
   if (v==='skills') renderSkillsView();
   if (v==='database') renderDatabase();
   if (v==='memory') renderMemory();
   if (v==='agents') renderAgentsView();
+  if (v==='projects') renderProjectsView();
   if (window.innerWidth <= 640) closeSidebar();
 }
 
@@ -1550,14 +1808,18 @@ function saveSettings() {
   CFG.compatUrl = document.getElementById('compat-url').value||'http://localhost:8000/v1';
   CFG.compatModel = document.getElementById('compat-model').value||'qwen3:0.6b';
   CFG.openrouterKey = document.getElementById('openrouter-key').value||'';
-  CFG.openrouterModel = document.getElementById('openrouter-model').value||'mistralai/mistral-7b-instruct:free';
+  let _orm = (document.getElementById('openrouter-model').value||'google/gemma-4-31b-it:free').replace(/\.free$/,':free');
+  if (!_orm.includes('/')) _orm = 'google/gemma-4-31b-it:free';
+  CFG.openrouterModel = _orm;
+  document.getElementById('openrouter-model').value = _orm;
   CFG.agentName = document.getElementById('agent-name').value||'ETEL Agent';
   CFG.agentPersona = document.getElementById('agent-persona').value||CFG.agentPersona;
   CFG.memoryMode = document.getElementById('memory-mode').value;
   saveCfg();
   const pill = CFG.engine==='claude'?'Claude':CFG.engine==='ollama'?CFG.ollamaModel:CFG.engine==='openai-compat'?CFG.compatModel:CFG.engine==='openrouter'?CFG.openrouterModel.split('/').pop():'hermes-3';
   document.getElementById('model-pill').textContent = pill;
-  document.getElementById('engine-badge').textContent = CFG.engine.toUpperCase().substring(0,7);
+  const _badges={'ollama':'OLLAMA','openai-compat':'JARVIS','claude':'CLAUDE','openrouter':'OPENRTR','hermes':'HERMES'};
+  document.getElementById('engine-badge').textContent = _badges[CFG.engine]||CFG.engine.toUpperCase().substring(0,7);
 }
 
 function loadSettingsUI() {
@@ -1565,25 +1827,59 @@ function loadSettingsUI() {
   document.getElementById('profile-name').value = CFG.profileName || 'User';
   const previewAvatar = document.getElementById('profile-avatar-preview');
   if (previewAvatar) { previewAvatar.textContent = (CFG.profileName||'U')[0].toUpperCase(); previewAvatar.style.background = CFG.profileColor||'#C9A227'; }
+  // Auto-fix broken/discontinued OpenRouter models
+  const _deadModels = ['mistralai/mistral-7b-instruct:free','deepseek/deepseek-r1:free','google/gemma-3-4b-it:free','google/gemma-3-4b-it'];
+  if (_deadModels.includes(CFG.openrouterModel)) { CFG.openrouterModel = 'google/gemma-4-31b-it:free'; saveCfg(); }
   // Highlight selected model in picker
   const curModel = CFG.openrouterModel;
   document.querySelectorAll('.model-opt').forEach(el => {
-    if (el.dataset.model === curModel) { el.classList.add('selected'); document.getElementById('selected-model-display').textContent = '✅ '+el.querySelector('.model-opt-name').textContent.trim().replace(/FREE|PAID/g,'').trim(); }
-    else el.classList.remove('selected');
+    const nameEl = el.querySelector('.model-opt-name');
+    const dispEl = document.getElementById('selected-model-display');
+    if (el.dataset.model === curModel) {
+      el.classList.add('selected');
+      if (dispEl && nameEl) dispEl.textContent = '✅ ' + nameEl.textContent.trim().replace(/FREE|PAID/g,'').trim();
+    } else { el.classList.remove('selected'); }
   });
   document.getElementById('ollama-url').value = CFG.ollamaUrl;
   document.getElementById('ollama-model').value = CFG.ollamaModel;
   document.getElementById('compat-url').value = CFG.compatUrl;
   document.getElementById('compat-model').value = CFG.compatModel;
   document.getElementById('openrouter-key').value = CFG.openrouterKey||'';
-  document.getElementById('openrouter-model').value = CFG.openrouterModel||'mistralai/mistral-7b-instruct:free';
+  document.getElementById('openrouter-model').value = CFG.openrouterModel||'google/gemma-4-31b-it:free';
   document.getElementById('agent-name').value = CFG.agentName;
   document.getElementById('agent-persona').value = CFG.agentPersona;
   document.getElementById('memory-mode').value = CFG.memoryMode;
   onEngineChange();
   const pill = CFG.engine==='claude'?'Claude':CFG.engine==='ollama'?CFG.ollamaModel:CFG.engine==='openai-compat'?CFG.compatModel:CFG.engine==='openrouter'?CFG.openrouterModel.split('/').pop():'hermes-3';
   document.getElementById('model-pill').textContent = pill;
-  document.getElementById('engine-badge').textContent = CFG.engine.toUpperCase().substring(0,7);
+  const _badges={'ollama':'OLLAMA','openai-compat':'JARVIS','claude':'CLAUDE','openrouter':'OPENRTR','hermes':'HERMES'};
+  document.getElementById('engine-badge').textContent = _badges[CFG.engine]||CFG.engine.toUpperCase().substring(0,7);
+}
+
+async function testOpenRouter() {
+  const key = document.getElementById('openrouter-key').value.trim();
+  const model = (document.getElementById('openrouter-model').value.trim() || 'google/gemma-4-31b-it:free').replace(/\.free$/,':free');
+  const el = document.getElementById('or-test-result');
+  if (!key) { el.style.display='block'; el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466'; el.textContent='⚠ Enter your API key first.'; return; }
+  el.style.display='block'; el.style.background='rgba(255,215,0,0.08)'; el.style.color='var(--tx2)'; el.textContent='Testing connection...';
+  try {
+    const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key,'HTTP-Referer':location.origin,'X-Title':'ETEL AI'},
+      body:JSON.stringify({model,messages:[{role:'user',content:'say hi in one word'}],stream:false,max_tokens:10})
+    });
+    const d = await r.json();
+    if (d.choices?.[0]?.message?.content) {
+      el.style.background='rgba(0,255,153,0.1)'; el.style.color='#00ff99';
+      el.textContent='✅ Connected! Model: '+model.split('/').pop()+' · Response: "'+d.choices[0].message.content.trim()+'"';
+    } else {
+      el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466';
+      el.textContent='❌ Error: '+(d.error?.message||JSON.stringify(d).substring(0,80));
+    }
+  } catch(e) {
+    el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466';
+    el.textContent='❌ '+e.message;
+  }
 }
 
 function openSettings() { document.getElementById('settings-modal').classList.add('show'); }
@@ -1624,18 +1920,20 @@ function loadAll() {
   try{const m=localStorage.getItem('etel_msgs2');if(m)msgs=JSON.parse(m);}catch(e){}
   try{const mm=localStorage.getItem('etel_mem2');if(mm)memory=JSON.parse(mm);}catch(e){}
   loadSkills();
-  // HTTPS + localhost Ollama = blocked by browser (mixed content)
-  // Show banner guiding user to set a Cloudflare Tunnel URL instead
-  if (window.location.protocol === 'https:' && CFG.engine === 'ollama' && (CFG.ollamaUrl||'').startsWith('http:')) {
-    CFG.engine = 'claude';
+  // On HTTPS: engines that need local access or unconfigured API keys fall back to HERMES
+  const _ollamaBlocked = CFG.engine === 'ollama' && (CFG.ollamaUrl||'').startsWith('http:');
+  const _claudeNoKey   = CFG.engine === 'claude';
+  const _openrouterNoKey = CFG.engine === 'openrouter' && !CFG.openrouterKey;
+  if (window.location.protocol === 'https:' && (_ollamaBlocked || _claudeNoKey || _openrouterNoKey)) {
+    CFG.engine = 'hermes';
     saveCfg();
     const badge = document.getElementById('engine-badge');
-    if (badge) { badge.textContent = 'CLAUDE'; badge.style.background = 'rgba(74,143,212,0.15)'; badge.style.color = '#4A8FD4'; }
+    if (badge) { badge.textContent = 'HERMES'; badge.style.background = 'rgba(201,162,39,0.12)'; badge.style.color = '#C9A227'; }
     // Show tunnel setup banner
     const banner = document.createElement('div');
     banner.id = 'ollama-tunnel-banner';
     banner.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a19;color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;z-index:9999;max-width:420px;text-align:center;border:1px solid #C9A227;';
-    banner.innerHTML = '⚠️ <b>Ollama blocked on HTTPS.</b> To use free local AI:<br>Run <code style="background:#333;padding:1px 5px;border-radius:3px;">cloudflared tunnel --url http://localhost:11434</code> then paste the URL in <b>Settings → Ollama URL</b>. <button onclick="this.parentElement.remove()" style="margin-left:8px;background:transparent;border:none;color:#C9A227;cursor:pointer;font-size:12px;">✕</button>';
+    banner.innerHTML = '💡 <b>Running on HERMES</b> (built-in offline AI). For better AI: add a free <b>OpenRouter</b> key in Settings, or run <code style="background:#333;padding:1px 5px;border-radius:3px;">cloudflared tunnel --url http://localhost:11434</code> and paste the URL in Settings → Ollama URL. <button onclick="this.parentElement.remove()" style="margin-left:8px;background:transparent;border:none;color:#C9A227;cursor:pointer;font-size:12px;">✕</button>';
     document.body.appendChild(banner);
     setTimeout(() => banner.remove(), 20000);
   }
@@ -1661,7 +1959,9 @@ function pickModel(el) {
   el.classList.add('selected');
   const model = el.dataset.model;
   document.getElementById('openrouter-model').value = model;
-  document.getElementById('selected-model-display').textContent = '✅ ' + el.querySelector('.model-opt-name').textContent.trim().replace(/FREE|PAID/g,'').trim();
+  const _disp = document.getElementById('selected-model-display');
+  const _name = el.querySelector('.model-opt-name');
+  if (_disp && _name) _disp.textContent = '✅ ' + _name.textContent.trim().replace(/FREE|PAID/g,'').trim();
 }
 
 function setAvatarColor(color) {
@@ -2013,7 +2313,7 @@ function selectModelDD(el) {
 }
 
 function initModelDD() {
-  const cur = CFG.openrouterModel || 'mistralai/mistral-7b-instruct:free';
+  const cur = CFG.openrouterModel || 'google/gemma-4-31b-it:free';
   const opt = document.querySelector('.model-dd-opt[data-model="' + cur + '"]');
   if (opt) {
     opt.classList.add('selected');
@@ -2030,18 +2330,26 @@ document.addEventListener('DOMContentLoaded', initModelDD);
 setTimeout(initModelDD, 800);
 
 // ═══════════════════════════════════════════════
-// MULTI-AGENT PANEL
+// MULTI-AGENT SWARM SYSTEM
 // ═══════════════════════════════════════════════
 
-const ETEL_AGENTS = [
-  { id:'assistant', name:'ETEL Assistant', icon:'🤖', model:'tinyllama', persona:'You are ETEL, an intelligent multilingual AI assistant. Be helpful, accurate, and concise.' },
-  { id:'coder',     name:'Code Agent',     icon:'💻', model:'codellama', persona:'You are an expert software engineer. Write clean, production-ready code with clear explanations.' },
-  { id:'researcher',name:'Research Agent', icon:'🔬', model:'mistral',   persona:'You are a deep research specialist. Analyze topics thoroughly and cite key facts.' },
-  { id:'jarvis',    name:'OpenJarvis',     icon:'🧠', model:'llama3',    persona:'You are Jarvis, a powerful personal AI assistant with broad knowledge and creative problem-solving.' },
-];
+// Role assignment — maps model name prefix → agent role
+const MODEL_ROLES = {
+  'qwen3':      { name:'Strategist',   icon:'🧠', color:'#00d4ff', persona:'You are a strategic planner and big-picture thinker. Analyze this idea from a planning, business strategy, and long-term impact perspective. Be concise and structured.' },
+  'tinyllama':  { name:'Quick Mind',   icon:'⚡', color:'#00ff99', persona:'You are a fast, sharp analyst. Give a quick, punchy analysis with 3 key points. No fluff.' },
+  'phi3':       { name:'Deep Analyst', icon:'🔬', color:'#aa44ff', persona:'You are a deep analytical thinker. Examine pros, cons, risks, and hidden opportunities. Think critically.' },
+  'phi':        { name:'Deep Analyst', icon:'🔬', color:'#aa44ff', persona:'You are a deep analytical thinker. Examine pros, cons, risks, and hidden opportunities. Think critically.' },
+  'codellama':  { name:'Code Expert',  icon:'💻', color:'#ffaa00', persona:'You are a senior software engineer. Analyze how this idea could be built technically. Suggest architecture, tools, and code snippets if relevant.' },
+  'mistral':    { name:'Researcher',   icon:'📚', color:'#ff6688', persona:'You are a research specialist. Find facts, precedents, and relevant context. Be thorough and cite examples.' },
+  'llama3':     { name:'Creative',     icon:'✨', color:'#ff88aa', persona:'You are a creative ideation specialist. Expand this idea with innovative angles, metaphors, and unexpected connections.' },
+  'llama':      { name:'Creative',     icon:'✨', color:'#ff88aa', persona:'You are a creative ideation specialist. Expand this idea with innovative angles, metaphors, and unexpected connections.' },
+  'deepseek':   { name:'Reasoner',     icon:'🤔', color:'#44ddff', persona:'You are a logical step-by-step reasoner. Break this idea down systematically. Show your thinking.' },
+  'gemma':      { name:'Summarizer',   icon:'📝', color:'#ffcc44', persona:'You are a master summarizer and communicator. Explain this idea clearly and suggest how to communicate it to others.' },
+  'default':    { name:'Agent',        icon:'🤖', color:'#00d4ff', persona:'You are an intelligent AI assistant. Analyze this idea thoroughly and provide useful insights.' },
+};
 
 const FREE_MODELS = [
-  { id:'tinyllama', name:'TinyLlama', size:'638 MB', cmd:'ollama pull tinyllama' },
+  { id:'tinyllama', name:'TinyLlama',  size:'638 MB', cmd:'ollama pull tinyllama' },
   { id:'phi3',      name:'Phi-3 Mini', size:'2.3 GB', cmd:'ollama pull phi3' },
   { id:'mistral',   name:'Mistral 7B', size:'4.1 GB', cmd:'ollama pull mistral' },
   { id:'llama3',    name:'Llama 3 8B', size:'4.7 GB', cmd:'ollama pull llama3' },
@@ -2050,29 +2358,53 @@ const FREE_MODELS = [
 
 let installedModels = [];
 let agentOutputs = {};
+let ETEL_AGENTS = [];  // Built dynamically from installed models
+
+function buildAgentsFromModels(models) {
+  // Deduplicate — if phi3:mini and phi3:latest both installed, use one role
+  const seen = new Set();
+  return models.map(modelName => {
+    const prefix = Object.keys(MODEL_ROLES).find(k => modelName.toLowerCase().startsWith(k));
+    const role = MODEL_ROLES[prefix] || MODEL_ROLES['default'];
+    const roleKey = role.name;
+    if (seen.has(roleKey)) return null; // skip duplicate roles
+    seen.add(roleKey);
+    return {
+      id: modelName.replace(/[^a-z0-9]/gi, '-'),
+      name: role.name,
+      icon: role.icon,
+      color: role.color,
+      model: modelName,
+      persona: role.persona,
+    };
+  }).filter(Boolean);
+}
 
 async function checkOllamaStatus() {
   const dot = document.getElementById('ollama-dot');
   const txt = document.getElementById('ollama-status-text');
   const url = CFG.ollamaUrl || 'http://localhost:11434';
   document.getElementById('ollama-url-inline').value = url;
-  txt.textContent = 'Checking Ollama at ' + url + ' ...';
+  txt.textContent = 'Scanning Ollama models...';
   dot.style.background = '#9b9a96';
   try {
     const r = await fetch(url + '/api/tags', { signal: AbortSignal.timeout(3000) });
     if (r.ok) {
       const data = await r.json();
       installedModels = (data.models || []).map(m => m.name);
-      dot.style.background = '#16a34a';
-      txt.textContent = 'Ollama running · ' + installedModels.length + ' model(s) installed: ' + (installedModels.join(', ') || 'none');
+      ETEL_AGENTS = buildAgentsFromModels(installedModels);
+      dot.style.background = 'var(--green)';
+      txt.textContent = '✅ ' + ETEL_AGENTS.length + ' agent' + (ETEL_AGENTS.length!==1?'s':'') + ' ready · models: ' + installedModels.join(', ');
       renderModelChips();
       renderAgentCards();
-    } else {
-      throw new Error('HTTP ' + r.status);
-    }
+    } else { throw new Error('HTTP ' + r.status); }
   } catch(e) {
     dot.style.background = '#dc2626';
-    txt.textContent = 'Ollama not found. Install at ollama.com · then run: ollama serve';
+    if (window.location.protocol === 'https:') {
+      txt.textContent = 'Agents require Ollama on your PC. Open http://localhost:7890 locally, or use OpenRouter in Chat.';
+    } else {
+      txt.textContent = 'Ollama not responding. Make sure Ollama is running (it is installed).';
+    }
   }
 }
 
@@ -2097,24 +2429,23 @@ function renderModelChips() {
 function renderAgentCards() {
   const grid = document.getElementById('agent-cards-grid');
   if (!grid) return;
+  if (!ETEL_AGENTS.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--tx3);padding:40px;font-family:var(--font-display);font-size:11px;letter-spacing:0.1em;">NO AGENTS DETECTED · OLLAMA NOT REACHABLE</div>`;
+    return;
+  }
   grid.innerHTML = ETEL_AGENTS.map(agent => {
-    const hasModel = installedModels.some(m => m.startsWith(agent.model));
     const out = agentOutputs[agent.id] || '';
-    return `<div style="background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;">
+    return `<div id="agent-card-${agent.id}" style="background:var(--bg2);border:1px solid ${agent.color}22;border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:8px;transition:border-color 0.3s;">
       <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:20px;">${agent.icon}</span>
+        <span style="font-size:22px;">${agent.icon}</span>
         <div>
-          <div style="font-size:13px;font-weight:600;color:var(--tx);">${agent.name}</div>
-          <div style="font-size:10px;color:${hasModel?'var(--green)':'var(--tx3)'};">${agent.model} ${hasModel?'· ready':'· not installed'}</div>
+          <div style="font-family:var(--font-display);font-size:11px;font-weight:700;color:${agent.color};letter-spacing:0.08em;">${agent.name.toUpperCase()}</div>
+          <div style="font-size:10px;color:var(--tx3);font-family:var(--font-body);">${agent.model}</div>
         </div>
-        <div id="agent-status-${agent.id}" style="margin-left:auto;font-size:10px;color:var(--tx3);">idle</div>
+        <div id="agent-status-${agent.id}" style="margin-left:auto;font-size:9px;color:var(--tx3);font-family:var(--font-display);letter-spacing:0.08em;">IDLE</div>
       </div>
-      <div style="font-size:11px;color:var(--tx3);line-height:1.5;">${agent.persona.slice(0,80)}...</div>
-      <div style="display:flex;gap:6px;">
-        <input id="agent-input-${agent.id}" placeholder="Ask ${agent.name}..." style="flex:1;padding:6px 10px;border-radius:5px;border:1px solid var(--line2);background:var(--bg);color:var(--tx);font-size:12px;">
-        <button onclick="runSingleAgent('${agent.id}')" style="padding:6px 12px;border-radius:5px;background:var(--tx);color:var(--bg);border:none;font-size:11px;cursor:pointer;">Run</button>
-      </div>
-      <div id="agent-out-${agent.id}" style="background:var(--bg);border:0.5px solid var(--line);border-radius:6px;padding:10px;min-height:60px;font-size:12px;color:var(--tx2);line-height:1.6;display:${out?'block':'none'};">${out}</div>
+      <div style="font-size:11px;color:var(--tx3);line-height:1.4;font-family:var(--font-body);">${agent.persona.slice(0,70)}...</div>
+      <div id="agent-out-${agent.id}" style="background:var(--bg);border:1px solid ${agent.color}22;border-radius:3px;padding:10px;min-height:50px;font-size:12px;color:var(--tx);line-height:1.6;font-family:var(--font-body);display:${out?'block':'none'};white-space:pre-wrap;">${out}</div>
     </div>`;
   }).join('');
 }
@@ -2122,36 +2453,34 @@ function renderAgentCards() {
 function renderAgentsView() {
   renderAgentCards();
   checkOllamaStatus();
+  const tg = document.getElementById('tunnel-guide');
+  if (tg) tg.style.display = window.location.protocol === 'https:' ? 'block' : 'none';
 }
 
-async function runSingleAgent(agentId) {
-  const agent = ETEL_AGENTS.find(a => a.id === agentId);
-  if (!agent) return;
-  const input = document.getElementById('agent-input-' + agentId);
-  const prompt = input?.value?.trim();
-  if (!prompt) return;
-
-  const outEl = document.getElementById('agent-out-' + agentId);
-  const statEl = document.getElementById('agent-status-' + agentId);
-  if (!outEl || !statEl) return;
+async function runAgentOnPrompt(agent, prompt) {
+  const outEl = document.getElementById('agent-out-' + agent.id);
+  const statEl = document.getElementById('agent-status-' + agent.id);
+  const card = document.getElementById('agent-card-' + agent.id);
+  if (!outEl || !statEl) return { agent, result: '' };
 
   outEl.style.display = 'block';
-  outEl.textContent = '...';
-  statEl.textContent = 'running';
-  statEl.style.color = 'var(--gold)';
+  outEl.textContent = '▋';
+  statEl.textContent = 'RUNNING';
+  statEl.style.color = agent.color;
+  if (card) card.style.borderColor = agent.color + '66';
 
-  const model = installedModels.find(m => m.startsWith(agent.model)) || installedModels[0] || 'tinyllama';
   const url = CFG.ollamaUrl || 'http://localhost:11434';
-
   try {
     const r = await fetch(url + '/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, messages: [
-        { role: 'system', content: agent.persona },
-        { role: 'user', content: prompt }
-      ], stream: true })
+      body: JSON.stringify({
+        model: agent.model,
+        messages: [{ role: 'system', content: agent.persona }, { role: 'user', content: prompt }],
+        stream: true, think: false
+      })
     });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
 
     const reader = r.body.getReader();
     const dec = new TextDecoder();
@@ -2161,36 +2490,94 @@ async function runSingleAgent(agentId) {
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-      for (const line of dec.decode(value, {stream:true}).split('\n')) {
+      for (const line of dec.decode(value, { stream: true }).split('\n')) {
         if (!line.trim()) continue;
         try {
           const d = JSON.parse(line);
-          if (d.message?.content) { full += d.message.content; outEl.textContent = full; }
+          const tok = d.message?.content || '';
+          if (tok) { full += tok; outEl.textContent = full; outEl.scrollTop = outEl.scrollHeight; }
         } catch(e) {}
       }
     }
 
-    agentOutputs[agentId] = full;
-    statEl.textContent = 'done';
+    agentOutputs[agent.id] = full;
+    statEl.textContent = 'DONE ✓';
     statEl.style.color = 'var(--green)';
+    if (card) card.style.borderColor = 'var(--green)44';
+    return { agent, result: full };
   } catch(err) {
-    outEl.textContent = 'Error: ' + err.message + '. Is Ollama running?';
-    statEl.textContent = 'error';
-    statEl.style.color = '#dc2626';
+    const msg = 'Error: ' + err.message;
+    outEl.textContent = msg;
+    statEl.textContent = 'ERROR';
+    statEl.style.color = '#ff4466';
+    return { agent, result: '' };
   }
+}
+
+async function runSingleAgent(agentId) {
+  const agent = ETEL_AGENTS.find(a => a.id === agentId);
+  if (!agent) return;
+  const input = document.getElementById('agent-broadcast-input');
+  const prompt = input?.value?.trim() || 'Introduce yourself and describe your role.';
+  await runAgentOnPrompt(agent, prompt);
 }
 
 async function broadcastToAgents() {
   const input = document.getElementById('agent-broadcast-input');
   const prompt = input?.value?.trim();
-  if (!prompt) return;
-  ETEL_AGENTS.forEach(agent => {
-    const el = document.getElementById('agent-input-' + agent.id);
-    if (el) el.value = prompt;
-  });
-  await Promise.all(ETEL_AGENTS.map(a => runSingleAgent(a.id)));
+  if (!prompt || !ETEL_AGENTS.length) return;
+  if (input) input.value = '';
+
+  // Reset all agent outputs
+  ETEL_AGENTS.forEach(a => { agentOutputs[a.id] = ''; });
+  renderAgentCards();
+  document.getElementById('swarm-summary-box')?.remove();
+
+  // Run ALL agents in true parallel
+  const results = await Promise.all(ETEL_AGENTS.map(a => runAgentOnPrompt(a, prompt)));
+
+  // Auto-synthesize in chat once all done
+  const combined = results.filter(r => r.result).map(r =>
+    `[${r.agent.icon} ${r.agent.name}]\n${r.result.trim()}`
+  ).join('\n\n---\n\n');
+
+  if (combined) {
+    // Inject swarm result into main chat
+    const swarmMsg = {
+      role: 'agent',
+      content: formatMarkdown(`## ⚡ Swarm Complete — ${results.filter(r=>r.result).length}/${ETEL_AGENTS.length} agents responded\n\n**Prompt:** ${prompt}\n\n${combined}`),
+      rawContent: combined,
+      skill: 'Multi-Agent Swarm'
+    };
+    msgs.push(swarmMsg);
+    renderMsgs();
+    switchView('chat', document.querySelector('.nav-item'));
+  }
 }
 
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  // Unregister ALL old service workers first (clears /etel-os/ cached paths)
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  });
+  // Register fresh SW after a tick
+  setTimeout(() => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }, 500);
+}
+</script>
+<script src="projects.js"></script>
+<script>
+// Update projects online badge on load
+document.addEventListener('DOMContentLoaded', () => {
+  const configs = JSON.parse(localStorage.getItem('etel_project_configs') || '{}');
+  const online = Object.values(configs).filter(c => c.status === 'online').length;
+  const badge = document.getElementById('projects-online-badge');
+  if (badge) badge.textContent = online > 0 ? online + ' ON' : '—';
+});
+</script>
 </body>
 </html>
+

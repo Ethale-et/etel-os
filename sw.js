@@ -1,15 +1,15 @@
 // ETEL Agent OS — Service Worker
 // Caches all assets for full offline use. Skills stored permanently.
 
-const CACHE = 'etel-v1';
+const CACHE = 'etel-v3';
 const SKILL_CACHE = 'etel-skills-v1';
 
 const CORE_FILES = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  '/EtelAi/',
+  '/EtelAi/index.html',
+  '/EtelAi/manifest.json',
+  '/EtelAi/icons/icon-192.png',
+  '/EtelAi/icons/icon-512.png',
 ];
 
 // ── INSTALL: cache core files ──
@@ -100,8 +100,8 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(data.title || 'ETEL Agent OS', {
       body: data.body,
-      icon: '/icons/icon-192.png',
-      badge: '/icons/icon-192.png',
+      icon: '/EtelAi/icons/icon-192.png',
+      badge: '/EtelAi/icons/icon-192.png',
     })
   );
 });

@@ -13,7 +13,7 @@ const ETEL_CONFIG = {
 
     // OpenJarvis API (OpenAI-compatible, port 8000) — active when engine = 'openai-compat'
     compatUrl: 'http://localhost:8000/v1',
-    compatModel: 'qwen3:0.6b',   // model loaded in OpenJarvis
+    compatModel: 'qwen3.5:4b',   // model loaded in OpenJarvis
 
     // Ollama fallback (port 11434) — active when engine = 'ollama'
     ollamaUrl: 'http://localhost:11434',
@@ -23,7 +23,8 @@ const ETEL_CONFIG = {
     // ollamaUrl: 'https://YOUR-TUNNEL.trycloudflare.com',
 
     ollamaModels: [
-      { id: 'qwen3:0.6b',       name: 'Qwen3 0.6B',      desc: 'OpenJarvis default · fast',   free: true },
+      { id: 'qwen3.5:4b',       name: 'Qwen3.5 4B',      desc: 'OpenJarvis default · balanced', free: true },
+      { id: 'qwen3:0.6b',       name: 'Qwen3 0.6B',      desc: 'Ultra fast · direct Ollama',  free: true },
       { id: 'tinyllama',       name: 'TinyLlama 1.1B',  desc: 'Ultra fast · 638 MB',         free: true },
       { id: 'phi3',            name: 'Phi-3 Mini',      desc: 'Smart · 2.3 GB',              free: true },
       { id: 'mistral',         name: 'Mistral 7B',      desc: 'Balanced · 4.1 GB',           free: true },
@@ -66,7 +67,7 @@ const ETEL_CONFIG = {
         id: 'jarvis',
         name: 'OpenJarvis',
         icon: '🧠',
-        model: 'qwen3:0.6b',
+        model: 'qwen3.5:4b',
         persona: 'You are Jarvis, a powerful personal AI assistant with broad knowledge.',
         skills: ['planner', 'meeting-assistant', 'prompt-engineer'],
         source: 'github',        // loaded from Agents/OpenJarvis-main.zip
