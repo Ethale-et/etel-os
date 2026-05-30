@@ -1,13 +1,13 @@
 {
   "name": "ETEL Agent OS",
-  "short_name": "ETEL",
+  "short_name": "ETEL AI",
   "description": "AI Skill Engine — Intelligence, Memory, Agency. Free Forever.",
-  "start_url": "/etel-os/",
+  "start_url": "/EtelAi/",
   "display": "standalone",
   "background_color": "#0d0820",
-  "theme_color": "#0d0820",
+  "theme_color": "#FFD700",
   "orientation": "any",
-  "scope": "/etel-os/",
+  "scope": "/EtelAi/",
   "lang": "en",
   "categories": ["productivity", "utilities"],
   "icons": [
@@ -29,14 +29,14 @@
       "name": "Skill Store",
       "short_name": "Skills",
       "description": "Browse and install AI skills",
-      "url": "/etel-os/?view=skills",
+      "url": "/EtelAi/?view=skills",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "My Agent",
       "short_name": "Agent",
       "description": "Talk to your ETEL agent",
-      "url": "/etel-os/?view=agent",
+      "url": "/EtelAi/?view=agent",
       "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
     }
   ]

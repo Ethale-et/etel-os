@@ -450,29 +450,56 @@ body::before{
 
 /* Welcome screen — central orb */
 .welcome{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
-.welcome-logo{display:none;}
-.welcome::before{
-  content:'';display:block;width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(ellipse at center, rgba(255,215,0,0.35) 0%, rgba(180,130,0,0.15) 40%, transparent 70%);
-  box-shadow:0 0 60px rgba(255,215,0,0.4),0 0 120px rgba(180,130,0,0.2),inset 0 0 40px rgba(255,215,0,0.1);
-  animation:orb-pulse 3s ease-in-out infinite;
-  margin-bottom:20px;position:relative;
+.welcome-logo{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:20px;}
+.welcome-logo-img{
+  width:260px;height:260px;border-radius:50%;object-fit:cover;
+  border:2px solid rgba(255,215,0,0.4);
+  box-shadow:0 0 60px rgba(255,215,0,0.35),0 0 120px rgba(255,215,0,0.15);
+  animation:logo-breathe 3s ease-in-out infinite;
+  position:relative;z-index:2;
 }
-.welcome::after{
-  content:'';position:absolute;width:300px;height:300px;border-radius:50%;
-  border:1px solid rgba(255,215,0,0.2);
-  top:50%;left:50%;transform:translate(-50%,-60%);
-  animation:orb-ring 4s linear infinite;
-  pointer-events:none;
+.welcome-logo-ring{
+  position:absolute;width:290px;height:290px;border-radius:50%;
+  border:1px solid rgba(255,215,0,0.25);
+  animation:logo-ring 4s linear infinite;
+  z-index:1;
 }
-@keyframes orb-pulse{
-  0%,100%{box-shadow:0 0 60px rgba(255,215,0,0.4),0 0 120px rgba(180,130,0,0.2),inset 0 0 40px rgba(255,215,0,0.1);}
-  50%{box-shadow:0 0 80px rgba(255,215,0,0.6),0 0 160px rgba(200,160,0,0.3),inset 0 0 60px rgba(255,215,0,0.2);}
+.welcome-logo-ring2{
+  position:absolute;width:320px;height:320px;border-radius:50%;
+  border:1px solid rgba(255,215,0,0.1);
+  animation:logo-ring 6s linear infinite reverse;
+  z-index:1;
 }
-@keyframes orb-ring{
-  0%{transform:translate(-50%,-60%) rotate(0deg) scale(1);}
-  50%{transform:translate(-50%,-60%) rotate(180deg) scale(1.05);}
-  100%{transform:translate(-50%,-60%) rotate(360deg) scale(1);}
+.welcome-speak-bars{
+  position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:flex-end;gap:3px;height:20px;z-index:3;
+  opacity:0;transition:opacity 0.3s;
+}
+.welcome-speak-bars.active{opacity:1;}
+.welcome-speak-bars span{
+  width:4px;border-radius:2px;background:var(--neon);
+  animation:speak-bar 0.6s ease-in-out infinite alternate;
+}
+.welcome-speak-bars span:nth-child(1){animation-delay:0s;   height:6px;}
+.welcome-speak-bars span:nth-child(2){animation-delay:0.1s; height:14px;}
+.welcome-speak-bars span:nth-child(3){animation-delay:0.2s; height:20px;}
+.welcome-speak-bars span:nth-child(4){animation-delay:0.3s; height:12px;}
+.welcome-speak-bars span:nth-child(5){animation-delay:0.4s; height:18px;}
+.welcome-speak-bars span:nth-child(6){animation-delay:0.1s; height:8px;}
+.welcome-speak-bars span:nth-child(7){animation-delay:0.25s;height:16px;}
+.welcome::before{display:none;}
+.welcome::after{display:none;}
+@keyframes logo-breathe{
+  0%,100%{box-shadow:0 0 60px rgba(255,215,0,0.35),0 0 120px rgba(255,215,0,0.15);transform:scale(1);}
+  50%{box-shadow:0 0 80px rgba(255,215,0,0.55),0 0 160px rgba(255,215,0,0.25);transform:scale(1.03);}
+}
+@keyframes logo-ring{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+@keyframes speak-bar{
+  0%{transform:scaleY(0.4);}
+  100%{transform:scaleY(1);}
 }
 .welcome-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;letter-spacing:0.2em;color:var(--neon);text-shadow:var(--neon-glow);text-transform:uppercase;}
 .welcome-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--tx3);letter-spacing:0.06em;margin-top:6px;text-align:center;}
@@ -1572,7 +1599,14 @@ function renderMsgs() {
   const c = document.getElementById('msgs-container');
   if (!msgs.length) {
     c.innerHTML = `<div class="welcome">
-      <div class="welcome-logo"><img src="${LOGO_SRC}" alt="ETEL" onerror="this.style.display='none'"></div>
+      <div class="welcome-logo" id="welcome-logo-wrap">
+        <div class="welcome-logo-ring"></div>
+        <div class="welcome-logo-ring2"></div>
+        <img class="welcome-logo-img" src="${LOGO_SRC}" alt="ETEL" onerror="this.src='icons/icon-192.png'">
+        <div class="welcome-speak-bars" id="speak-bars">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
       <div class="welcome-title">ETEL Agent OS</div>
       <div class="welcome-sub">50 AI skills · Real AI built-in · Local memory · Amharic support · Your own domain</div>
       <div class="welcome-chips">
@@ -1612,7 +1646,16 @@ function renderMsgs() {
   c.scrollTop = c.scrollHeight;
 }
 
+function setLogoSpeaking(active) {
+  const bars = document.getElementById('speak-bars');
+  if (bars) bars.classList.toggle('active', active);
+  const img = document.querySelector('.welcome-logo-img');
+  if (img) img.style.boxShadow = active
+    ? '0 0 80px rgba(255,215,0,0.7),0 0 160px rgba(255,215,0,0.35)'
+    : '';
+}
 function showThinking() {
+  setLogoSpeaking(true);
   const c = document.getElementById('msgs-container');
   const el = document.createElement('div');
   el.className = 'msg agent'; el.id = 'thinking-row';
@@ -1620,7 +1663,7 @@ function showThinking() {
     <div class="thinking-row"><div class="thinking-bubble"><div class="dot-pulse"><span></span><span></span><span></span></div><span class="thinking-text">Thinking</span></div></div>`;
   c.appendChild(el); c.scrollTop = c.scrollHeight;
 }
-function hideThinking() { document.getElementById('thinking-row')?.remove(); }
+function hideThinking() { document.getElementById('thinking-row')?.remove(); setLogoSpeaking(false); }
 
 // ── COPY ──
 function copyMsg(idx, btn) {
