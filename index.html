@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -365,8 +365,8 @@ input::placeholder,textarea.modal-ta::placeholder{color:var(--tx3);}
 html,body{
   background:#020b18;
   background-image:
-    linear-gradient(rgba(0,180,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,180,255,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(255,215,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,215,0,0.04) 1px, transparent 1px);
   background-size:40px 40px;
 }
 
@@ -379,42 +379,42 @@ body::before{
 /* Sidebar — HUD panel */
 .sidebar{
   background:rgba(2,11,24,0.95);
-  border-right:1px solid rgba(0,180,255,0.25);
-  box-shadow:4px 0 24px rgba(0,180,255,0.08);
+  border-right:1px solid rgba(255,215,0,0.25);
+  box-shadow:4px 0 24px rgba(255,215,0,0.08);
 }
-.sb-head{border-bottom:1px solid rgba(0,180,255,0.2);padding:16px 14px 12px;}
+.sb-head{border-bottom:1px solid rgba(255,215,0,0.2);padding:16px 14px 12px;}
 .logo-text .en{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;letter-spacing:0.12em;color:var(--neon);text-shadow:var(--neon-glow);}
 .logo-text .am{color:var(--tx3);font-size:10px;}
-.logo-img{border:1px solid rgba(0,212,255,0.4);border-radius:4px;box-shadow:0 0 10px rgba(0,212,255,0.3);}
+.logo-img{border:1px solid rgba(255,215,0,0.4);border-radius:4px;box-shadow:0 0 10px rgba(255,215,0,0.3);}
 
 /* Live badge */
 .live-badge{color:var(--neon);font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;}
 .live-dot{background:var(--neon);box-shadow:0 0 6px var(--neon);}
-.engine-badge{background:rgba(0,212,255,0.1)!important;color:var(--neon)!important;border:1px solid rgba(0,212,255,0.3);font-family:'Orbitron',monospace;letter-spacing:0.08em;}
+.engine-badge{background:rgba(255,215,0,0.1)!important;color:var(--neon)!important;border:1px solid rgba(255,215,0,0.3);font-family:'Orbitron',monospace;letter-spacing:0.08em;}
 
 /* Nav items */
 .sb-sec{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.15em;color:var(--tx3);padding:12px 14px 4px;}
 .nav-item{border-radius:2px;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:0.05em;color:var(--tx2);border-left:2px solid transparent;}
-.nav-item:hover{background:rgba(0,180,255,0.06);color:var(--neon);border-left-color:rgba(0,180,255,0.4);}
-.nav-item.active{background:rgba(0,180,255,0.08);color:var(--neon);border-left:2px solid var(--neon);box-shadow:inset 0 0 12px rgba(0,180,255,0.05);}
+.nav-item:hover{background:rgba(255,215,0,0.06);color:var(--neon);border-left-color:rgba(255,215,0,0.4);}
+.nav-item.active{background:rgba(255,215,0,0.08);color:var(--neon);border-left:2px solid var(--neon);box-shadow:inset 0 0 12px rgba(255,215,0,0.05);}
 .nav-badge{background:var(--neon);color:#020b18;font-family:'Orbitron',monospace;font-size:9px;font-weight:700;}
 
 /* Main area */
 .main{background:transparent;}
-.header{background:rgba(2,11,24,0.9);border-bottom:1px solid rgba(0,180,255,0.2);backdrop-filter:blur(10px);}
+.header{background:rgba(2,11,24,0.9);border-bottom:1px solid rgba(255,215,0,0.2);backdrop-filter:blur(10px);}
 .header-title{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:0.15em;color:var(--neon);}
-.model-pill{background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.25);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:0.08em;border-radius:2px;}
+.model-pill{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:0.08em;border-radius:2px;}
 .header-btn{color:var(--tx3);}
-.header-btn:hover{background:rgba(0,180,255,0.1);color:var(--neon);}
+.header-btn:hover{background:rgba(255,215,0,0.1);color:var(--neon);}
 
 /* Chat messages */
 .msg-user{
-  background:rgba(0,180,255,0.12)!important;
-  border:1px solid rgba(0,180,255,0.3)!important;
+  background:rgba(255,215,0,0.12)!important;
+  border:1px solid rgba(255,215,0,0.3)!important;
   border-radius:2px 8px 8px 2px!important;
   color:var(--neon)!important;
   font-family:'Share Tech Mono',monospace!important;
-  box-shadow:0 0 12px rgba(0,180,255,0.1)!important;
+  box-shadow:0 0 12px rgba(255,215,0,0.1)!important;
 }
 .msg-agent,.msg.agent{
   background:rgba(0,30,50,0.6)!important;
@@ -424,50 +424,50 @@ body::before{
 }
 .msg-content{font-family:'Share Tech Mono',monospace;font-size:13px;line-height:1.7;color:var(--tx);}
 .msg-content strong{color:var(--neon);}
-.msg-content code{background:rgba(0,180,255,0.1);border:1px solid rgba(0,180,255,0.2);color:#00ffcc;border-radius:2px;}
-.msg-content pre{background:rgba(0,10,20,0.8)!important;border:1px solid rgba(0,180,255,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(0,180,255,0.08);}
-.msg-content pre code{background:transparent!important;border:none!important;color:#00ffcc!important;}
+.msg-content code{background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);color:#FFD700;border-radius:2px;}
+.msg-content pre{background:rgba(0,10,20,0.8)!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(255,215,0,0.08);}
+.msg-content pre code{background:transparent!important;border:none!important;color:#FFD700!important;}
 
 /* Skill label on messages */
 .msg-skill{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;color:var(--tx3);}
 
 /* Thinking bubble */
-.thinking-bubble{background:rgba(0,30,50,0.8)!important;border:1px solid rgba(0,180,255,0.2)!important;}
+.thinking-bubble{background:rgba(0,30,50,0.8)!important;border:1px solid rgba(255,215,0,0.2)!important;}
 .thinking-text{font-family:'Orbitron',monospace!important;letter-spacing:0.1em!important;color:var(--neon)!important;}
 .dot-pulse span{background:var(--neon)!important;box-shadow:0 0 6px var(--neon)!important;}
 
 /* Input area */
-.input-wrap{background:rgba(2,11,24,0.95)!important;border:1px solid rgba(0,180,255,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(0,180,255,0.08)!important;}
-.input-wrap:focus-within{border-color:rgba(0,212,255,0.5)!important;box-shadow:0 0 20px rgba(0,212,255,0.15)!important;}
+.input-wrap{background:rgba(2,11,24,0.95)!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 16px rgba(255,215,0,0.08)!important;}
+.input-wrap:focus-within{border-color:rgba(255,215,0,0.5)!important;box-shadow:0 0 20px rgba(255,215,0,0.15)!important;}
 .input-wrap textarea{color:var(--neon)!important;font-family:'Share Tech Mono',monospace!important;font-size:13px!important;}
-.input-wrap textarea::placeholder{color:rgba(0,180,255,0.35)!important;}
-.send-btn{background:var(--neon)!important;border-radius:3px!important;box-shadow:0 0 12px rgba(0,212,255,0.4)!important;}
-.send-btn:hover{box-shadow:0 0 20px rgba(0,212,255,0.7)!important;}
+.input-wrap textarea::placeholder{color:rgba(255,215,0,0.35)!important;}
+.send-btn{background:var(--neon)!important;border-radius:3px!important;box-shadow:0 0 12px rgba(255,215,0,0.4)!important;}
+.send-btn:hover{box-shadow:0 0 20px rgba(255,215,0,0.7)!important;}
 
 /* Quick chips */
-.chip,.quick-chip{background:rgba(0,180,255,0.07)!important;border:1px solid rgba(0,180,255,0.2)!important;color:var(--tx2)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;font-size:11px!important;}
-.chip:hover,.quick-chip:hover{background:rgba(0,180,255,0.15)!important;color:var(--neon)!important;border-color:rgba(0,212,255,0.4)!important;}
+.chip,.quick-chip{background:rgba(255,215,0,0.07)!important;border:1px solid rgba(255,215,0,0.2)!important;color:var(--tx2)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;font-size:11px!important;}
+.chip:hover,.quick-chip:hover{background:rgba(255,215,0,0.15)!important;color:var(--neon)!important;border-color:rgba(255,215,0,0.4)!important;}
 
 /* Welcome screen — central orb */
 .welcome{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
 .welcome-logo{display:none;}
 .welcome::before{
   content:'';display:block;width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(ellipse at center, rgba(0,180,255,0.35) 0%, rgba(0,100,200,0.15) 40%, transparent 70%);
-  box-shadow:0 0 60px rgba(0,180,255,0.4),0 0 120px rgba(0,100,200,0.2),inset 0 0 40px rgba(0,212,255,0.1);
+  background:radial-gradient(ellipse at center, rgba(255,215,0,0.35) 0%, rgba(180,130,0,0.15) 40%, transparent 70%);
+  box-shadow:0 0 60px rgba(255,215,0,0.4),0 0 120px rgba(180,130,0,0.2),inset 0 0 40px rgba(255,215,0,0.1);
   animation:orb-pulse 3s ease-in-out infinite;
   margin-bottom:20px;position:relative;
 }
 .welcome::after{
   content:'';position:absolute;width:300px;height:300px;border-radius:50%;
-  border:1px solid rgba(0,180,255,0.2);
+  border:1px solid rgba(255,215,0,0.2);
   top:50%;left:50%;transform:translate(-50%,-60%);
   animation:orb-ring 4s linear infinite;
   pointer-events:none;
 }
 @keyframes orb-pulse{
-  0%,100%{box-shadow:0 0 60px rgba(0,180,255,0.4),0 0 120px rgba(0,100,200,0.2),inset 0 0 40px rgba(0,212,255,0.1);}
-  50%{box-shadow:0 0 80px rgba(0,212,255,0.6),0 0 160px rgba(0,150,255,0.3),inset 0 0 60px rgba(0,212,255,0.2);}
+  0%,100%{box-shadow:0 0 60px rgba(255,215,0,0.4),0 0 120px rgba(180,130,0,0.2),inset 0 0 40px rgba(255,215,0,0.1);}
+  50%{box-shadow:0 0 80px rgba(255,215,0,0.6),0 0 160px rgba(200,160,0,0.3),inset 0 0 60px rgba(255,215,0,0.2);}
 }
 @keyframes orb-ring{
   0%{transform:translate(-50%,-60%) rotate(0deg) scale(1);}
@@ -477,24 +477,24 @@ body::before{
 .welcome-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;letter-spacing:0.2em;color:var(--neon);text-shadow:var(--neon-glow);text-transform:uppercase;}
 .welcome-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--tx3);letter-spacing:0.06em;margin-top:6px;text-align:center;}
 .welcome-chips{margin-top:20px;}
-.welcome-chip{background:rgba(0,180,255,0.07);border:1px solid rgba(0,180,255,0.2);color:var(--tx2);font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;border-radius:2px;padding:7px 14px;}
-.welcome-chip:hover{background:rgba(0,180,255,0.15);color:var(--neon);border-color:var(--neon);box-shadow:0 0 10px rgba(0,212,255,0.2);}
+.welcome-chip{background:rgba(255,215,0,0.07);border:1px solid rgba(255,215,0,0.2);color:var(--tx2);font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.1em;border-radius:2px;padding:7px 14px;}
+.welcome-chip:hover{background:rgba(255,215,0,0.15);color:var(--neon);border-color:var(--neon);box-shadow:0 0 10px rgba(255,215,0,0.2);}
 
 /* Modal/overlay */
 .modal-overlay{background:rgba(1,6,14,0.92)!important;backdrop-filter:blur(8px)!important;}
-.modal{background:#030f1e!important;border:1px solid rgba(0,180,255,0.25)!important;border-radius:4px!important;box-shadow:0 0 40px rgba(0,180,255,0.15)!important;}
+.modal{background:#030f1e!important;border:1px solid rgba(255,215,0,0.25)!important;border-radius:4px!important;box-shadow:0 0 40px rgba(255,215,0,0.15)!important;}
 .modal-title{font-family:'Orbitron',monospace!important;letter-spacing:0.1em!important;color:var(--neon)!important;}
-input,select,textarea.modal-ta{background:rgba(0,180,255,0.05)!important;border:1px solid rgba(0,180,255,0.2)!important;color:var(--tx)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;}
-input:focus,select:focus,textarea.modal-ta:focus{border-color:var(--neon)!important;box-shadow:0 0 8px rgba(0,212,255,0.2)!important;}
+input,select,textarea.modal-ta{background:rgba(255,215,0,0.05)!important;border:1px solid rgba(255,215,0,0.2)!important;color:var(--tx)!important;border-radius:2px!important;font-family:'Share Tech Mono',monospace!important;}
+input:focus,select:focus,textarea.modal-ta:focus{border-color:var(--neon)!important;box-shadow:0 0 8px rgba(255,215,0,0.2)!important;}
 label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter-spacing:0.08em!important;color:var(--tx3)!important;}
 .btn-primary{background:transparent!important;border:1px solid var(--neon)!important;color:var(--neon)!important;font-family:'Orbitron',monospace!important;font-size:10px!important;letter-spacing:0.1em!important;border-radius:2px!important;}
-.btn-primary:hover{background:rgba(0,212,255,0.1)!important;box-shadow:0 0 12px rgba(0,212,255,0.3)!important;}
+.btn-primary:hover{background:rgba(255,215,0,0.1)!important;box-shadow:0 0 12px rgba(255,215,0,0.3)!important;}
 
 /* Skills, memory, database panels */
-.skill-card{background:rgba(0,20,40,0.6)!important;border:1px solid rgba(0,180,255,0.15)!important;border-radius:4px!important;}
-.skill-card:hover{border-color:rgba(0,212,255,0.4)!important;box-shadow:0 0 12px rgba(0,180,255,0.1)!important;}
+.skill-card{background:rgba(0,20,40,0.6)!important;border:1px solid rgba(255,215,0,0.15)!important;border-radius:4px!important;}
+.skill-card:hover{border-color:rgba(255,215,0,0.4)!important;box-shadow:0 0 12px rgba(255,215,0,0.1)!important;}
 .skill-name{font-family:'Orbitron',monospace!important;font-size:11px!important;color:var(--neon)!important;}
-.mem-entry{background:rgba(0,20,40,0.5)!important;border:1px solid rgba(0,180,255,0.12)!important;border-radius:2px!important;}
+.mem-entry{background:rgba(0,20,40,0.5)!important;border:1px solid rgba(255,215,0,0.12)!important;border-radius:2px!important;}
 
 /* Section headers */
 .section-head{font-family:'Orbitron',monospace!important;letter-spacing:0.15em!important;color:var(--neon)!important;font-size:11px!important;}
@@ -502,14 +502,14 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
 /* Scrollbars */
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(0,180,255,0.3);border-radius:2px;}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,255,0.5);}
+::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.3);border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,215,0,0.5);}
 
 /* Bottom sb info */
-.sb-bottom{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.08em;color:var(--tx3);border-top:1px solid rgba(0,180,255,0.12);}
+.sb-bottom{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:0.08em;color:var(--tx3);border-top:1px solid rgba(255,215,0,0.12);}
 
 /* Info banner */
-#ollama-tunnel-banner{background:#020b18!important;border:1px solid rgba(0,212,255,0.3)!important;color:var(--tx)!important;font-family:'Share Tech Mono',monospace!important;box-shadow:0 0 20px rgba(0,180,255,0.15)!important;}
+#ollama-tunnel-banner{background:#020b18!important;border:1px solid rgba(255,215,0,0.3)!important;color:var(--tx)!important;font-family:'Share Tech Mono',monospace!important;box-shadow:0 0 20px rgba(255,215,0,0.15)!important;}
 </style>
 </head>
 <body>
@@ -753,7 +753,7 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
       <div style="margin-bottom:14px;">
         <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--tx3);letter-spacing:0.1em;margin-bottom:8px;">INSTALLED MODELS · PULL MORE TO ADD AGENT ROLES</div>
         <div style="display:flex;flex-wrap:wrap;gap:6px;" id="model-download-list"></div>
-        <div style="margin-top:10px;padding:10px 12px;background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.12);border-radius:3px;">
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.12);border-radius:3px;">
           <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--neon);letter-spacing:0.1em;margin-bottom:6px;">ADD MORE AGENTS — run in your terminal:</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px;">
             <code onclick="navigator.clipboard.writeText('ollama pull codellama')" style="background:var(--bg3);border:1px solid var(--line2);padding:4px 10px;border-radius:3px;font-size:11px;cursor:pointer;color:var(--neon);" title="Click to copy">💻 ollama pull codellama</code>
@@ -777,12 +777,12 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
       </div>
 
       <!-- Swarm Input -->
-      <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.2);border-radius:4px;padding:14px;margin-bottom:14px;box-shadow:0 0 20px rgba(0,212,255,0.06);">
+      <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.2);border-radius:4px;padding:14px;margin-bottom:14px;box-shadow:0 0 20px rgba(255,215,0,0.06);">
         <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--neon);letter-spacing:0.12em;margin-bottom:6px;">⚡ SWARM MODE</div>
         <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;font-family:'Share Tech Mono',monospace;">One idea → all agents work in parallel → results appear in Chat</div>
         <div style="display:flex;gap:8px;">
-          <input id="agent-broadcast-input" placeholder="Enter your idea, question or task..." style="flex:1;padding:9px 14px;border-radius:3px;border:1px solid rgba(0,212,255,0.25);background:var(--bg);color:var(--neon);font-size:13px;font-family:'Share Tech Mono',monospace;" onkeydown="if(event.key==='Enter')broadcastToAgents()">
-          <button onclick="broadcastToAgents()" style="padding:9px 18px;border-radius:3px;background:var(--neon);color:#020b18;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'Orbitron',monospace;letter-spacing:0.08em;box-shadow:0 0 14px rgba(0,212,255,0.4);">⚡ LAUNCH</button>
+          <input id="agent-broadcast-input" placeholder="Enter your idea, question or task..." style="flex:1;padding:9px 14px;border-radius:3px;border:1px solid rgba(255,215,0,0.25);background:var(--bg);color:var(--neon);font-size:13px;font-family:'Share Tech Mono',monospace;" onkeydown="if(event.key==='Enter')broadcastToAgents()">
+          <button onclick="broadcastToAgents()" style="padding:9px 18px;border-radius:3px;background:var(--neon);color:#020b18;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'Orbitron',monospace;letter-spacing:0.08em;box-shadow:0 0 14px rgba(255,215,0,0.4);">⚡ LAUNCH</button>
         </div>
       </div>
 
@@ -1003,7 +1003,7 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
         <div style="font-size:11px;color:var(--tx3);margin-bottom:10px;font-family:var(--font-body);">Works on the live site · No local install needed · Free tier available</div>
 
         <div style="margin-bottom:10px;">
-          <a href="https://openrouter.ai/keys" target="_blank" style="display:inline-block;padding:7px 14px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:3px;color:var(--neon);font-size:11px;font-family:var(--font-display);text-decoration:none;letter-spacing:0.06em;">
+          <a href="https://openrouter.ai/keys" target="_blank" style="display:inline-block;padding:7px 14px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);border-radius:3px;color:var(--neon);font-size:11px;font-family:var(--font-display);text-decoration:none;letter-spacing:0.06em;">
             → GET FREE KEY AT OPENROUTER.AI
           </a>
         </div>
@@ -1012,7 +1012,7 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
           <label>API Key</label>
           <div style="display:flex;gap:6px;align-items:center;">
             <input type="password" id="openrouter-key" placeholder="sk-or-v1-..." style="flex:1;">
-            <button onclick="testOpenRouter()" style="padding:7px 12px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:var(--neon);border-radius:3px;cursor:pointer;font-size:11px;white-space:nowrap;font-family:var(--font-display);">Test</button>
+            <button onclick="testOpenRouter()" style="padding:7px 12px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);color:var(--neon);border-radius:3px;cursor:pointer;font-size:11px;white-space:nowrap;font-family:var(--font-display);">Test</button>
           </div>
           <div id="or-test-result" style="font-size:11px;margin-top:6px;padding:6px 10px;border-radius:3px;display:none;"></div>
         </div>
@@ -1818,7 +1818,7 @@ async function testOpenRouter() {
   const model = (document.getElementById('openrouter-model').value.trim() || 'google/gemma-4-31b-it:free').replace(/\.free$/,':free');
   const el = document.getElementById('or-test-result');
   if (!key) { el.style.display='block'; el.style.background='rgba(255,68,102,0.1)'; el.style.color='#ff4466'; el.textContent='⚠ Enter your API key first.'; return; }
-  el.style.display='block'; el.style.background='rgba(0,180,255,0.08)'; el.style.color='var(--tx2)'; el.textContent='Testing connection...';
+  el.style.display='block'; el.style.background='rgba(255,215,0,0.08)'; el.style.color='var(--tx2)'; el.textContent='Testing connection...';
   try {
     const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method:'POST',
@@ -2530,3 +2530,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
