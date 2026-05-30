@@ -1,7 +1,7 @@
 // ETEL Agent OS — Service Worker
 // Caches all assets for full offline use. Skills stored permanently.
 
-const CACHE = 'etel-v1';
+const CACHE = 'etel-v3';
 const SKILL_CACHE = 'etel-skills-v1';
 
 const CORE_FILES = [

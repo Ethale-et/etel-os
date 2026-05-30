@@ -1,0 +1,38 @@
+# ETEL AI — EtelAi folder rules
+
+# Allow JSON, JS, and web app files
+<FilesMatch "\.(json|js|webmanifest|txt)$">
+    Require all granted
+</FilesMatch>
+
+# Specifically allow manifest and version files
+<Files "manifest.json">
+    Require all granted
+</Files>
+<Files "version.json">
+    Require all granted
+</Files>
+
+# Correct MIME types
+AddType application/json .json
+AddType application/manifest+json .webmanifest
+AddType text/javascript .js
+AddType image/png .png
+
+# Service worker scope
+<Files "sw.js">
+    Header set Service-Worker-Allowed "/"
+    Header set Cache-Control "no-cache"
+</Files>
+
+# No caching for HTML and JS (always get latest)
+<FilesMatch "\.(html|js|json)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</FilesMatch>
+
+# Enable CORS
+Header always set Access-Control-Allow-Origin "*"
+
+Options -Indexes

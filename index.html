@@ -1166,7 +1166,7 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
 // ═══════════════════════════════════════════
 
 // FIX: logo is a path, not fake base64
-const LOGO_SRC = 'icons/icon-192.png';
+const LOGO_SRC = 'icons/icon-192.png?' + Date.now(); // cache-bust to bypass old SW
 
 const CFG = {
   engine: 'ollama',             // Direct Ollama (port 11434) — qwen3:0.6b already installed
@@ -2558,7 +2558,14 @@ async function broadcastToAgents() {
 </script>
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  // Unregister ALL old service workers first (clears /etel-os/ cached paths)
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  });
+  // Register fresh SW after a tick
+  setTimeout(() => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }, 500);
 }
 </script>
 <script src="projects.js"></script>
