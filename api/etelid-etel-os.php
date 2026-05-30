@@ -97,6 +97,92 @@ switch ($action) {
         ), ARRAY_A);
         ok($row);
 
+    // ── Login — cross-project auth entry point ───────────────
+    case 'login':
+        $phone    = preg_replace('/\s+/', '', $body['phone'] ?? '');
+        $password = $body['password'] ?? '';
+        $project  = $body['project']  ?? 'api';
+        if (!$phone || !$password) err('phone and password required');
+
+        $member = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$pfx}etelid_members WHERE phone=%s LIMIT 1", $phone
+        ), ARRAY_A);
+
+        if (!$member)                          err('No account found with this phone number', 404);
+        if ($member['status'] === 'suspended') err('Account suspended. Contact support.', 403);
+        if ($member['status'] === 'revoked')   err('Account revoked.', 403);
+        if (empty($member['pin_hash']))        err('No password set. Reset your password.', 400);
+
+        // Verify bcrypt or legacy SHA-256
+        $valid = false;
+        if (function_exists('password_verify')) {
+            $valid = password_verify($password, $member['pin_hash']);
+            if (!$valid && strlen($member['pin_hash']) === 64) {
+                $valid = hash_equals($member['pin_hash'], hash('sha256', 'etelid_v2_' . $password . '_salt_9x'));
+            }
+        } else {
+            $valid = hash_equals($member['pin_hash'], hash('sha256', 'etelid_v2_' . $password . '_salt_9x'));
+        }
+
+        if (!$valid) {
+            $wpdb->insert("{$pfx}etelid_log", [
+                'member_id' => $member['id'], 'etel_id' => $member['etel_id'],
+                'event' => 'login_failed', 'detail' => "Cross-project login failed from: $project",
+            ]);
+            err('Incorrect password', 401);
+        }
+
+        // Create session token
+        $token = bin2hex(random_bytes(32));
+        $wpdb->insert("{$pfx}etelid_sessions", [
+            'member_id'  => $member['id'],
+            'token'      => $token,
+            'ip'         => $_SERVER['REMOTE_ADDR'] ?? '',
+            'ua'         => $_SERVER['HTTP_USER_AGENT'] ?? '',
+            'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),
+        ]);
+        $wpdb->insert("{$pfx}etelid_log", [
+            'member_id' => $member['id'], 'etel_id' => $member['etel_id'],
+            'event' => 'login', 'detail' => "Cross-project login from: $project",
+        ]);
+
+        unset($member['pin_hash'], $member['password']);
+        // Attach company links
+        $member['companies'] = $wpdb->get_results($wpdb->prepare(
+            "SELECT company_slug, company_name, role FROM {$pfx}etelid_companies WHERE member_id=%d", $member['id']
+        ), ARRAY_A);
+        ok(['member' => $member, 'token' => $token, 'expires_in' => 2592000]);
+
+    // ── Verify session token (called by other projects) ───────
+    case 'verify_token':
+        $token = $body['token'] ?? $_GET['token'] ?? $_SERVER['HTTP_X_ETEL_TOKEN'] ?? '';
+        if (!$token) err('token required');
+
+        $session = $wpdb->get_row($wpdb->prepare(
+            "SELECT s.member_id, s.expires_at,
+                    m.etel_id, m.fin, m.full_name, m.phone, m.status AS member_status
+             FROM {$pfx}etelid_sessions s
+             JOIN {$pfx}etelid_members m ON m.id = s.member_id
+             WHERE s.token=%s AND s.expires_at > NOW() LIMIT 1", $token
+        ), ARRAY_A);
+
+        if (!$session)                              err('Invalid or expired token', 401);
+        if ($session['member_status'] !== 'active') err('Account ' . $session['member_status'], 403);
+
+        ok(['valid' => true, 'member' => [
+            'id'        => $session['member_id'],
+            'etel_id'   => $session['etel_id'],
+            'fin'       => $session['fin'],
+            'full_name' => $session['full_name'],
+            'phone'     => $session['phone'],
+        ]]);
+
+    // ── Logout — invalidate token ────────────────────────────
+    case 'logout':
+        $token = $body['token'] ?? $_SERVER['HTTP_X_ETEL_TOKEN'] ?? '';
+        if ($token) $wpdb->delete("{$pfx}etelid_sessions", ['token' => $token]);
+        ok(['logged_out' => true]);
+
     // ── Verify QR / FIN (for cross-project auth) ─────────────
     case 'verify':
         auth();
