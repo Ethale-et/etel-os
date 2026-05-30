@@ -566,6 +566,11 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
       <span>Agents</span>
       <span class="nav-badge" style="background:rgba(201,162,39,0.15);color:#C9A227;">NEW</span>
     </div>
+    <div class="nav-item" onclick="switchView('projects',this)">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="18" rx="1"/><rect x="9" y="3" width="6" height="18" rx="1"/><rect x="16" y="3" width="6" height="18" rx="1"/></svg>
+      <span>Projects</span>
+      <span class="nav-badge" style="background:rgba(255,215,0,0.12);color:var(--gold);" id="projects-online-badge">—</span>
+    </div>
     <div class="nav-item" onclick="switchView('updater',this)">
       <svg viewBox="0 0 24 24"><path d="M21 2H3v16h5v4l4-4h9V2z"/><path d="M9.5 9h5M9.5 12h3"/></svg>
       <span>Updater</span>
@@ -817,6 +822,9 @@ label{font-family:'Orbitron',monospace!important;font-size:10px!important;letter
       </table>
     </div>
   </div>
+
+  <!-- PROJECTS VIEW -->
+  <div id="projects-view" style="display:none;flex:1;overflow-y:auto;background:var(--bg);"></div>
 
   <!-- UPDATER VIEW -->
   <div id="updater-view" style="display:none;flex:1;overflow-y:auto;">
@@ -1713,11 +1721,12 @@ function switchView(v, el) {
   if (vEl) { vEl.style.display='flex'; vEl.style.flexDirection='column'; }
   document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
   if (el) el.classList.add('active');
-  document.getElementById('view-title').textContent = {chat:'CHAT',skills:'SKILLS',memory:'MEMORY VAULT',database:'DATABASE',updater:'UPDATER',agents:'AGENTS'}[v]||'ETEL';
+  document.getElementById('view-title').textContent = {chat:'CHAT',skills:'SKILLS',memory:'MEMORY VAULT',database:'DATABASE',updater:'UPDATER',agents:'AGENTS',projects:'PROJECTS'}[v]||'ETEL';
   if (v==='skills') renderSkillsView();
   if (v==='database') renderDatabase();
   if (v==='memory') renderMemory();
   if (v==='agents') renderAgentsView();
+  if (v==='projects') renderProjectsView();
   if (window.innerWidth <= 640) closeSidebar();
 }
 
@@ -2508,6 +2517,16 @@ async function broadcastToAgents() {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
+</script>
+<script src="projects.js"></script>
+<script>
+// Update projects online badge on load
+document.addEventListener('DOMContentLoaded', () => {
+  const configs = JSON.parse(localStorage.getItem('etel_project_configs') || '{}');
+  const online = Object.values(configs).filter(c => c.status === 'online').length;
+  const badge = document.getElementById('projects-online-badge');
+  if (badge) badge.textContent = online > 0 ? online + ' ON' : '—';
+});
 </script>
 </body>
 </html>
