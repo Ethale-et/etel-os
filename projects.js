@@ -4,6 +4,14 @@
 const PROJECTS = {
   registry: [
     {
+      id: 'etel-id',
+      name: 'Etel-ID',
+      nameAm: 'ኢቴሌ መታወቂያ',
+      icon: '🪪',
+      color: '#FFD700',
+      apiFile: 'wp-content/plugins/etel-id-v3/etel-os.php',
+    },
+    {
       id: 'delivery',
       name: 'Etel Delivery',
       nameAm: 'ኢቴሌ ዴሊቨሪ',
